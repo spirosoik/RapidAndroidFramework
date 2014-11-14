@@ -1,2 +1,4 @@
-RapidAndroidApp
-===============
+Rapid Android Development Template
+==================================
+
+
