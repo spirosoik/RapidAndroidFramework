@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.0.2"
+
+    defaultConfig {
+        applicationId "com.soi.rapidandroidapp"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "String", "ENVIRONMENT", "\"LIVE\""
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField "String", "ENVIRONMENT", "\"STAGING\""
+        }
+        uat {
+            buildConfigField "String", "ENVIRONMENT", "\"UAT\""
+        }
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    sourceSets {
+
+        androidTest {
+            java.srcDirs = ['src/androidTest/java']
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    compile 'com.github.eluleci:flatui:3.0.0'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.squareup.retrofit:retrofit:1.7.0'
+    compile 'com.squareup.okio:okio:1.0.1'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup:otto:1.3.5'
+    compile 'com.squareup.dagger:dagger:1.2.2'
+    compile 'com.squareup.dagger:dagger-compiler:1.2.2'
+    compile 'com.jakewharton:butterknife:5.1.2'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':libraries:facebook-android-sdk:facebook')
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="share_fb_url">216896791667977</string>
+    <string name="share_tw_url">audioboxlive</string>
+    <string name="share_youtube">http://www.youtube.com/user/audioboxliveradio</string>
+    <string name="share_soundcloud">soundcloud://users:7697512</string>
+
+    <string name="soundcloud_http_url">https://soundcloud.com/audioboxlive/abc</string>
+    <string name="podcast_url">http://audioboxlive.podbean.com</string>
+    <string name="facebook_http_url"></string>
+</resources>

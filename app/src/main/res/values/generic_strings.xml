@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Generic strings -->
+    <string name="txt_ok">OK</string>
+    <string name="txt_share">share</string>
+    <string name="txt_no_internet">no internet connection</string>
+    <string name="txt_connection_provider">3G/LTE</string>
+    <string name="txt_connection_wifi">WIFI</string>
+
+</resources>
