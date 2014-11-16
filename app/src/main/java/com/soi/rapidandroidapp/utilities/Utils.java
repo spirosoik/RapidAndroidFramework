@@ -15,12 +15,10 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.provider.Settings;
 import android.util.Patterns;
 import android.view.WindowManager;
 
 import com.soi.rapidandroidapp.R;
-import com.soi.rapidandroidapp.helpers.DialogsHelper;
 
 import org.apache.http.HttpStatus;
 
@@ -29,8 +27,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -220,68 +216,6 @@ public class Utils {
         return Environment.getExternalStorageDirectory() + "/" + ctx.getApplicationInfo().packageName.replaceAll("\\.", "") + "/";
     }
 
-    /**
-     * Get a uniqueId per device
-     * @param ctx
-     * @return
-     */
-    public String getUniqueID(Context ctx)
-    {
-        String m_szDevIDShort = "";
-        String m_szAndroidID = "";
-        String m_szWLANMAC = "";
-
-        try {
-            m_szDevIDShort = "35" + // we make this look like a valid IMEI
-                    Build.BOARD.length() % 10 + Build.BRAND.length() % 10 +
-                    Build.CPU_ABI.length() % 10 + Build.DEVICE.length() % 10 +
-                    Build.DISPLAY.length() % 10 + Build.HOST.length() % 10 +
-                    Build.ID.length() % 10 + Build.MANUFACTURER.length() % 10 +
-                    Build.MODEL.length() % 10 + Build.PRODUCT.length() % 10 +
-                    Build.TAGS.length() % 10 + Build.TYPE.length() % 10 +
-                    Build.USER.length() % 10;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            m_szAndroidID = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            WifiManager wm = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
-            m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String m_szLongID = m_szWLANMAC + m_szDevIDShort + m_szAndroidID;
-
-        MessageDigest m = null;
-        try {
-            m = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        m.update(m_szLongID.getBytes(), 0, m_szLongID.length());
-        byte p_md5Data[] = m.digest();
-
-        //noinspection RedundantStringConstructorCall
-        String m_szUniqueID = new String();
-        for (int i = 0; i < p_md5Data.length; i++) {
-            int b = (0xFF & p_md5Data[i]);
-            // if it is a single digit, make sure it have 0 in front (proper
-            // padding)
-            if (b <= 0xF)
-                m_szUniqueID += "0";
-            // add number to string
-            m_szUniqueID += Integer.toHexString(b);
-        }
-
-        return m_szUniqueID;
-    }
     /**
      *
      * @param context

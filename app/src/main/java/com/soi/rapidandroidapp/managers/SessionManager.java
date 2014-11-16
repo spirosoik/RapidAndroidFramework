@@ -23,7 +23,7 @@ public class SessionManager {
     // Shared pref mode
     protected int PRIVATE_MODE = 0;
 
-    private static final String PREF_NAME = "PocketTourPref";
+    private static final String PREF_NAME = "RapidAndroidAppPref";
 
     // All shared preferences key
     private static final String IS_LOGIN = "IsLoggedIn";

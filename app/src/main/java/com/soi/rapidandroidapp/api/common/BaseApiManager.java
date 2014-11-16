@@ -23,4 +23,19 @@ public interface BaseApiManager<T> {
      * @return
      */
     RestAdapter.Builder getDefaultRestAdapterBuilder();
+
+    /**
+     * Executes the proper API resource via Reflection
+     * @param target
+     * @param methodName
+     * @param args
+     */
+    Object execute(Object target, String methodName, Object... args);
+
+    /**
+     * Executes the proper API resource for each action separately
+     * @param action
+     * @param args
+     */
+    Object execute(String action, Object... args);
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.soi.rapidandroidapp.api.GsonInstance;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
+import com.soi.rapidandroidapp.utilities.ReflectionUtils;
 import com.squareup.okhttp.OkHttpClient;
 
 import retrofit.RestAdapter;
@@ -21,7 +22,8 @@ public abstract class AbstractApiManager<T> implements BaseApiManager<T> {
     public T service;
 
     @Override
-    public RestAdapter.Builder getDefaultRestAdapterBuilder() {
+    public RestAdapter.Builder getDefaultRestAdapterBuilder()
+    {
         OkHttpClient httpClient = new OkHttpClient();
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
@@ -39,12 +41,20 @@ public abstract class AbstractApiManager<T> implements BaseApiManager<T> {
     }
 
     @Override
-    public void setApiService(T service) {
+    public void setApiService(T service)
+    {
         this.service = service;
     }
 
     @Override
-    public T getApiService() {
+    public T getApiService()
+    {
         return this.service;
+    }
+
+    @Override
+    public Object execute(Object target, String methodName, Object... args)
+    {
+        return ReflectionUtils.tryInvoke(target, methodName, args);
     }
 }

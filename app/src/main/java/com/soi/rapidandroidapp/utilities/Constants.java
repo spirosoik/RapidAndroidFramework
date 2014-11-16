@@ -5,10 +5,17 @@ package com.soi.rapidandroidapp.utilities;
  */
 public class Constants {
 
-    public final static String API_LIVE_URL     = "https://api.pocket-tour.com/api";
-    public final static String API_STAGING_URL  = "https://staging-api.pocket-tour.com/api";
-    public final static String API_UAT_URL      = "https://uat-api.pocket-tour.com/api";
+    public final static String API_LIVE_URL     = "";
+    public final static String API_STAGING_URL  = "";
+    public final static String API_UAT_URL      = "";
 
+    // Api headers which must be included in HTTP
+    public final static String API_HEADER_VERSION = "";
 
-    public final static String API_HEADER_VERSION = "application/vnd.pocket-tour.v1.0";
+    // FOURSQUARE STATIC VARIABLES
+    public final static String FOURSQUARE_API_URL               = "https://api.foursquare.com/v2";
+    public final static String FOURSQUARE_API_CLIENT_ID         = "";
+    public final static String FOURSQUARE_API_CLIENT_SECRET     = "";
+    //
+
 }

@@ -3,8 +3,9 @@ package com.soi.rapidandroidapp.modules;
 import android.content.Context;
 
 import com.soi.rapidandroidapp.BaseApplication;
-import com.soi.rapidandroidapp.api.ApiManager;
-import com.soi.rapidandroidapp.helpers.DialogsHelper;
+import com.soi.rapidandroidapp.api.managers.ApiManager;
+import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
+import com.soi.rapidandroidapp.utilities.DialogsHelper;
 import com.soi.rapidandroidapp.managers.SessionManager;
 import com.soi.rapidandroidapp.ui.LoginActivity;
 import com.soi.rapidandroidapp.ui.common.BaseFragmentActivity;
@@ -32,6 +33,26 @@ import dagger.Provides;
 public class AppModule {
 
     @Provides
+    SessionManager provideSessionManager(Context context)
+    {
+        return new SessionManager(context);
+    }
+
+    @Provides
+    @Singleton
+    ApiManager provideApiManager()
+    {
+        return ApiManager.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    FoursquareApiManager provideFoursquareApiManager()
+    {
+        return FoursquareApiManager.getInstance();
+    }
+
+    @Provides
     @Singleton
     Utils provideUtilities()
     {
@@ -45,19 +66,6 @@ public class AppModule {
     {
 
         return DialogsHelper.getInstance();
-    }
-
-    @Provides
-    SessionManager provideSessionManager(Context context)
-    {
-        return new SessionManager(context);
-    }
-
-    @Provides
-    @Singleton
-    ApiManager provideApiManager()
-    {
-        return ApiManager.getInstance();
     }
 
 }
