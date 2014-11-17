@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Rapidandroidapp : Abstract, easy, quick, flexible and extendable Rapid Android development">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Rapidandroidapp</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/spirosoik/RapidAndroidApp">View on GitHub</a>
+
+          <h1 id="project_title">Rapidandroidapp</h1>
+          <h2 id="project_tagline">Abstract, easy, quick, flexible and extendable Rapid Android development</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/spirosoik/RapidAndroidApp/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/spirosoik/RapidAndroidApp/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="rapid-android-development-template" class="anchor" href="#rapid-android-development-template" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rapid Android Development Template</h1>
+
+<h2>
+<a id="tools" class="anchor" href="#tools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tools</h2>
+
+<p>Android Studio 0.8.x and Gradle 2.x</p>
+
+<h2>
+<a id="ide-tools" class="anchor" href="#ide-tools" aria-hidden="true"><span class="octicon octicon-link"></span></a>IDE Tools</h2>
+
+<ul>
+<li><a href="https://github.com/square/dagger-intellij-plugin">Dagger Plugin</a></li>
+<li><a href="http://plugins.jetbrains.com/plugin/7369">Android ButterKnife Zelezny</a></li>
+</ul>
+
+<h2>
+<a id="libraries" class="anchor" href="#libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Libraries</h2>
+
+<ul>
+<li><a href="https://github.com/pardom/ActiveAndroid">Active Android 3.1.10</a></li>
+<li><a href="http://square.github.io/retrofit/">Retrofit 1.7.0</a></li>
+<li><a href="http://square.github.io/okhttp/">OkHttp 2.0.0</a></li>
+<li><a href="http://square.github.io/otto/">Otto Eventbus 1.3.5</a></li>
+<li><a href="http://square.github.io/dagger/">Dagger 1.2.2</a></li>
+<li><a href="https://github.com/JakeWharton/butterknife">ButterKnife 5.1.2</a></li>
+<li><a href="http://square.github.io/picasso/">Otto Picasso 2.3.2</a></li>
+</ul>
+
+<h2>
+<a id="future-integration" class="anchor" href="#future-integration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Future Integration</h2>
+
+<ul>
+<li><a href="https://github.com/ragunathjawahar/android-saripaar">UI validation library Saripaar</a></li>
+</ul>
+
+<h2>
+<a id="3rd-parties-social" class="anchor" href="#3rd-parties-social" aria-hidden="true"><span class="octicon octicon-link"></span></a>3rd Parties Social</h2>
+
+<ul>
+<li><a href="https://github.com/facebook/facebook-android-sdk">Facebook SDK as a git module</a></li>
+</ul>
+
+<h2>
+<a id="example-how-to-use-sqlite-databse" class="anchor" href="#example-how-to-use-sqlite-databse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example how to use SQLite Databse</h2>
+
+<p>For quick and easy access to the database, it have been used the ActiveRecord pattern via the ActiveAndroid Library. Into the source code there is a class <code>DBModel&lt;T&gt;</code> which can be used from any OBject/class which want to have access to the SQLite Database. The <code>DBModel&lt;T&gt; extends Model</code> which includes all the necessary methods for accessing the database as <code>load, save, delete, getId</code>. </p>
+
+<p>The <code>DBModel&lt;T&gt;</code> class includes some extra methods according to the type <code>&lt;T&gt;</code> and some helpers which can be used and they are the followings:</p>
+
+<ul>
+<li>
+<code>DBModel findOne(Long id)</code>          -&gt; Returns the record according to the requested <code>id</code> </li>
+<li>
+<code>List&lt;? extends DBModel&gt; findAll()</code> -&gt; Returns all the records of the current <code>DBModel&lt;T&gt;</code> </li>
+<li>
+<code>void deleteOne(Long id)</code>           -&gt; Deletes the record according to the requested <code>id</code> </li>
+<li>
+<code>void deleteAll()</code>                  -&gt; Deletes all the records of the current <code>DBModel&lt;T&gt;</code>
+</li>
+<li>
+<code>Select selectQuery()</code>              -&gt; Returns an instance of <code>Select</code> ActiveAndroid (reduce the new Object)</li>
+<li>
+<code>Delete deleteQuery()</code>              -&gt; Returns an instance of <code>Delete</code> ActiveAndroid(reduce the new Object)</li>
+</ul>
+
+<p>eg. Let's assume that we have a <code>User</code> object which must be saved/selected/updated/delete into the SQLite Database.</p>
+
+<div class="highlight highlight-java"><pre>@Table(name <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span>)
+<span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-entc">User</span> <span class="pl-s">extends</span> <span class="pl-eoi">DBModel&lt;<span class="pl-s">User</span>&gt;</span> {
+
+    <span class="pl-s">@Column</span>(<span class="pl-c1">name</span> <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>, <span class="pl-c1">index</span> <span class="pl-ko">=</span> <span class="pl-c1">true</span>, <span class="pl-c1">unique</span> <span class="pl-ko">=</span> <span class="pl-c1">true</span>)
+    <span class="pl-s">public</span> <span class="pl-s">String</span> email;
+
+    <span class="pl-s">@Column</span>(<span class="pl-c1">name</span> <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>fname<span class="pl-pds">"</span></span>)
+    <span class="pl-s">public</span> <span class="pl-s">String</span> fname;
+
+    <span class="pl-s">@Column</span>(<span class="pl-c1">name</span> <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>lname<span class="pl-pds">"</span></span>)
+    <span class="pl-s">public</span> <span class="pl-s">String</span> lname;
+
+    <span class="pl-s">@Column</span>(<span class="pl-c1">name</span> <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>avatar<span class="pl-pds">"</span></span>)
+    <span class="pl-s">public</span> <span class="pl-s">String</span> avatar;
+
+    <span class="pl-s">public</span> <span class="pl-enf">User</span>() {
+    }
+}</pre></div>
+
+<p>We have our Database Model and now we want to access to the database. In this point I want to note that in the <code>DBModel</code> has implemented the Singletton Holder pattern in order to avoid multiple instances of the same <code>DBModel&lt;T&gt;</code>.  </p>
+
+<ul>
+<li>Get all available users: <br>
+</li>
+</ul>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">List&lt;<span class="pl-s">User</span>&gt;</span> users <span class="pl-ko">=</span> (<span class="pl-s">List&lt;<span class="pl-s">User</span>&gt;</span>) <span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>findAll();</pre></div>
+
+<ul>
+<li>Get the available user by id: <br>
+</li>
+</ul>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">User</span> searchUser <span class="pl-ko">=</span> (<span class="pl-s">User</span>) <span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>findOne(<span class="pl-cn">21L</span>);</pre></div>
+
+<ul>
+<li>Inserts a user into table: <br>
+</li>
+</ul>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">User</span> user <span class="pl-ko">=</span> <span class="pl-k">new</span> <span class="pl-s">User</span>();
+user<span class="pl-ko">.</span>avatar <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>foo_bar.jpg<span class="pl-pds">"</span></span>;
+user<span class="pl-ko">.</span>email  <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>foo_bar@test.com<span class="pl-pds">"</span></span>;
+user<span class="pl-ko">.</span>lname  <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Bar<span class="pl-pds">"</span></span>;
+user<span class="pl-ko">.</span>fname  <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Foo<span class="pl-pds">"</span></span>;
+user<span class="pl-ko">.</span>save();</pre></div>
+
+<ul>
+<li>Updates a user: <br>
+</li>
+</ul>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">User</span> searchUser <span class="pl-ko">=</span> (<span class="pl-s">User</span>) <span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>findOne(<span class="pl-cn">21L</span>);
+searchUser<span class="pl-ko">.</span>fname  <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>FooUpdate<span class="pl-pds">"</span></span>;
+searchUser<span class="pl-ko">.</span>save();</pre></div>
+
+<ul>
+<li>Delete all users: <br>
+</li>
+</ul>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>deleteAll();</pre></div>
+
+<ul>
+<li>Delete a user by id: <br>
+</li>
+</ul>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>deleteOne(<span class="pl-cn">21L</span>);</pre></div>
+
+<p>To be contiuned with details for API requests. Stay tuned :)</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Rapidandroidapp maintained by <a href="https://github.com/spirosoik">spirosoik</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
