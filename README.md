@@ -27,12 +27,12 @@ For quick and easy access to the database, it have been used the ActiveRecord pa
 
 The DBModel<T> class includes some extra methods according to the type <T> and some helpers which can be used and they are the followings:
 
-* ```java DBModel findOne(Long id) ``` -> Returns the record according to the requested id
-* List<? extends DBModel> findAll() -> Returns all the records of the current DBModel<T>
-* void deleteOne(Long id) -> Deletes the record according to the requested id
-* void deleteAll() -> Deletes all the records of the current DBModel<T>
-* Select selectQuery() -> Returns an instance of Select ActiveAndroid (reduce the new Object)
-* Delete deleteQuery() -> Returns an instance of Delete ActiveAndroid(reduce the new Object)
+* ```DBModel findOne(Long id) ``` -> Returns the record according to the requested id
+* ```List<? extends DBModel> findAll()``` -> Returns all the records of the current ```DBModel<T>```
+* ```void deleteOne(Long id)``` -> Deletes the record according to the requested id
+* ```void deleteAll()``` -> Deletes all the records of the current ```DBModel<T>```
+* ```Select selectQuery()``` -> Returns an instance of Select ActiveAndroid (reduce the new Object)
+* ```Delete deleteQuery()``` -> Returns an instance of Delete ActiveAndroid(reduce the new Object)
 * eg. Let's assume that we have a User object which must be saved/selected/updated/delete into the SQLite Database.
 ```java
 @Table(name = 'user')
@@ -56,23 +56,36 @@ public class User extends DBModel<User> {
 ```
 We have our Database Model and now we want to access to the database. In this point I want to note that in the DBModel has implemented the Singletton Holder pattern in order to avoid multiple instances of the same DBModel<T>.
 
-Get all available users:
-List<User> users = (List<User>) DBModel.getInstance(User.class).findAll();
-Get the available user by id:
+* Get all available users:
+```java 
+    List<User> users = (List<User>) DBModel.getInstance(User.class).findAll();
+```
+* Get the available user by id:
 User searchUser = (User) DBModel.getInstance(User.class).findOne(21L);
-Inserts a user into table:
+
+* Inserts a user into table:
+```java 
 User user = new User();
 user.avatar = "foo_bar.jpg";
 user.email  = "foo_bar@test.com";
 user.lname  = "Bar";
 user.fname  = "Foo";
 user.save();
-Updates a user:
+```
+
+* Updates a user:
+```java 
 User searchUser = (User) DBModel.getInstance(User.class).findOne(21L);
 searchUser.fname  = "FooUpdate";
 searchUser.save();
-Delete all users:
+```
+* Delete all users:
+```java
 DBModel.getInstance(User.class).deleteAll();
-Delete a user by id:
+```
+
+* Delete a user by id:
+```java
 DBModel.getInstance(User.class).deleteOne(21L);
+```
 To be contiuned with details for API requests. Stay tuned :)
