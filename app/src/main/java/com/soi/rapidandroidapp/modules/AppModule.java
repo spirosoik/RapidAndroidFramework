@@ -5,10 +5,10 @@ import android.content.Context;
 import com.soi.rapidandroidapp.BaseApplication;
 import com.soi.rapidandroidapp.api.managers.ApiManager;
 import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
-import com.soi.rapidandroidapp.utilities.DialogsHelper;
 import com.soi.rapidandroidapp.managers.SessionManager;
 import com.soi.rapidandroidapp.ui.LoginActivity;
 import com.soi.rapidandroidapp.ui.common.BaseFragmentActivity;
+import com.soi.rapidandroidapp.utilities.DialogsHelper;
 import com.soi.rapidandroidapp.utilities.Utils;
 
 import javax.inject.Singleton;

@@ -29,7 +29,7 @@ public class DBModel<T> extends Model implements IBaseModel<DBModel>,Comparable<
     private Date updated_at = new Date();
 
     /**
-     * Singletton pattern for each model which extends this abstract class
+     * Singletton pattern for each model which extends this DBModel class
      * @param classOf
      * @param <T>
      * @return

@@ -6,36 +6,47 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.soi.rapidandroidapp.R;
+import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
+import com.soi.rapidandroidapp.api.managers.events.FoursquareExploreEvent;
+import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.Explore;
+import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.common.Response;
+import com.soi.rapidandroidapp.events.common.BusProvider;
+import com.soi.rapidandroidapp.ui.common.BaseFragmentActivity;
+import com.soi.rapidandroidapp.utilities.Constants;
+import com.squareup.otto.Subscribe;
+
+import java.util.Date;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseFragmentActivity {
+
+    private String ll;
+    private String clientId;
+    private String clientSecret;
+    private int limit;
+    private int sortByDistance;
+    private String v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ll = "40.7,-74";
+        clientId     = Constants.FOURSQUARE_API_CLIENT_ID;
+        clientSecret = Constants.FOURSQUARE_API_CLIENT_SECRET;
+        limit = 15;
+        sortByDistance = 1;
+        v = FoursquareApiManager.dateFormatter.format(new Date());
+
+        FoursquareApiManager.getInstance().explore(ll, clientId, clientSecret, limit, sortByDistance, v);
     }
 
+    @Subscribe
+    public void onFoursquareExplore(FoursquareExploreEvent event)
+    {
+        Explore explore = event.response;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        Response response = explore.response;
     }
 }

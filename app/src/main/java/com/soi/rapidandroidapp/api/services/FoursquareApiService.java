@@ -14,21 +14,21 @@ public interface FoursquareApiService {
                      @Query("ll") String ll, //
                      @Query("client_id") String clientId, //
                      @Query("client_secret") String clientSecret, //
-                     @Query("limit") int limit, //
-                     @Query("sortByDistance") int sortByDistance, //
+                     @Query("limit") Integer limit, //
+                     @Query("sortByDistance") Integer sortByDistance, //
                      @Query("v") String date //
     );
 
     @GET("/venues/search")
     SearchResult search( //
                          @Query("intent") String intent, //
-                         @Query("radius") int radius, //
+                         @Query("radius") Integer radius, //
                          @Query("ll") String ll, //
                          @Query("client_id") String clientId, //
                          @Query("client_secret") String clientSecret, //
                          @Query("query") String query, //
-                         @Query("limit") int limit, //
-                         @Query("sortByDistance") int sortByDistance, //
+                         @Query("limit") Integer limit, //
+                         @Query("sortByDistance") Integer sortByDistance, //
                          @Query("v") String date//
     );
 }

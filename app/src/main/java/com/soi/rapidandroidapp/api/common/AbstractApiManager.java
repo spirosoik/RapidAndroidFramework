@@ -3,6 +3,7 @@ package com.soi.rapidandroidapp.api.common;
 import android.util.Log;
 
 import com.soi.rapidandroidapp.api.GsonInstance;
+import com.soi.rapidandroidapp.api.managers.common.AbstractAsyncTask;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
 import com.soi.rapidandroidapp.utilities.ReflectionUtils;
 import com.squareup.okhttp.OkHttpClient;
@@ -15,11 +16,12 @@ import retrofit.converter.GsonConverter;
  * Created by Spiros I. Oikonomakis on 11/4/14.
  * An abstract API manager which can be extended by each new API manager
  */
-public abstract class AbstractApiManager<T> implements BaseApiManager<T> {
+public abstract class AbstractApiManager<T> extends AbstractAsyncTask implements BaseApiManager<T> {
 
     public static final String TAG_LOG_NAME = Class.class.getSimpleName();
 
     public T service;
+    private GsonInstance gsonInstance = new GsonInstance();
 
     @Override
     public RestAdapter.Builder getDefaultRestAdapterBuilder()

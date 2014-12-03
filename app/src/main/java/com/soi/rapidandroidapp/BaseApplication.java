@@ -5,6 +5,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 
 import com.activeandroid.ActiveAndroid;
+import com.soi.rapidandroidapp.api.GsonInstance;
 import com.soi.rapidandroidapp.modules.Injector;
 import com.soi.rapidandroidapp.modules.RootModule;
 
@@ -14,6 +15,7 @@ import com.soi.rapidandroidapp.modules.RootModule;
 public class BaseApplication extends Application {
 
     private static BaseApplication instance;
+//    private GsonInstance gsonInstance;
 
     public BaseApplication() {
 
@@ -47,6 +49,7 @@ public class BaseApplication extends Application {
 
         // Perform injection
         Injector.init(getRootModule(), this);
+//        gsonInstance = new GsonInstance();
 
     }
 
