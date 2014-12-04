@@ -1,38 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Rapidandroidapp : Abstract, easy, quick, flexible and extendable Rapid Android development">
+    <title>Rapidandroidapp by spirosoik</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Rapidandroidapp</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
+    <div class="wrapper">
+      <header>
+        <h1>Rapidandroidapp</h1>
+        <p>Abstract, easy, quick, flexible and extendable Rapid Android development</p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/spirosoik/RapidAndroidApp">View on GitHub</a>
+        <p class="view"><a href="https://github.com/spirosoik/RapidAndroidApp">View the Project on GitHub <small>spirosoik/RapidAndroidApp</small></a></p>
 
-          <h1 id="project_title">Rapidandroidapp</h1>
-          <h2 id="project_tagline">Abstract, easy, quick, flexible and extendable Rapid Android development</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/spirosoik/RapidAndroidApp/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/spirosoik/RapidAndroidApp/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+        <ul>
+          <li><a href="https://github.com/spirosoik/RapidAndroidApp/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/spirosoik/RapidAndroidApp/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/spirosoik/RapidAndroidApp">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
         <h1>
-<a id="rapid-android-development-template" class="anchor" href="#rapid-android-development-template" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rapid Android Development Template</h1>
+<a id="rad-android-app" class="anchor" href="#rad-android-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>RAD Android App</h1>
 
 <h2>
 <a id="tools" class="anchor" href="#tools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tools</h2>
@@ -58,12 +55,6 @@
 <li><a href="http://square.github.io/dagger/">Dagger 1.2.2</a></li>
 <li><a href="https://github.com/JakeWharton/butterknife">ButterKnife 5.1.2</a></li>
 <li><a href="http://square.github.io/picasso/">Otto Picasso 2.3.2</a></li>
-</ul>
-
-<h2>
-<a id="future-integration" class="anchor" href="#future-integration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Future Integration</h2>
-
-<ul>
 <li><a href="https://github.com/ragunathjawahar/android-saripaar">UI validation library Saripaar</a></li>
 </ul>
 
@@ -71,117 +62,80 @@
 <a id="3rd-parties-social" class="anchor" href="#3rd-parties-social" aria-hidden="true"><span class="octicon octicon-link"></span></a>3rd Parties Social</h2>
 
 <ul>
-<li><a href="https://github.com/facebook/facebook-android-sdk">Facebook SDK as a git module</a></li>
+<li>Facebook SDK as a git module</li>
 </ul>
 
 <h2>
-<a id="example-how-to-use-sqlite-databse" class="anchor" href="#example-how-to-use-sqlite-databse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example how to use SQLite Databse</h2>
+<a id="implemented" class="anchor" href="#implemented" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implemented</h2>
 
-<p>For quick and easy access to the database, it have been used the ActiveRecord pattern via the ActiveAndroid Library. Into the source code there is a class <code>DBModel&lt;T&gt;</code> which can be used from any OBject/class which want to have access to the SQLite Database. The <code>DBModel&lt;T&gt; extends Model</code> which includes all the necessary methods for accessing the database as <code>load, save, delete, getId</code>. </p>
+<h3>
+<a id="gradle" class="anchor" href="#gradle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gradle</h3>
 
-<p>The <code>DBModel&lt;T&gt;</code> class includes some extra methods according to the type <code>&lt;T&gt;</code> and some helpers which can be used and they are the followings:</p>
+<ul>
+<li>Gradle configuration for multi-environment support</li>
+</ul>
+
+<h3>
+<a id="environment-manager" class="anchor" href="#environment-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>Environment Manager</h3>
+
+<ul>
+<li>Multi-environment support (<code>LIVE</code>, <code>STAGING</code>, <code>UAT</code>)</li>
+<li>Decides the environment for the current build</li>
+<li>Decides the app's base API URL for the current build</li>
+<li>Decides the app's API logging level for the current build</li>
+</ul>
+
+<h3>
+<a id="sqlite-database" class="anchor" href="#sqlite-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>SQLite Database</h3>
 
 <ul>
 <li>
-<code>DBModel findOne(Long id)</code>          -&gt; Returns the record according to the requested <code>id</code> </li>
+<code>DBModel</code> class to extend for each Object/Model you want to have access in database.</li>
+<li>Public methods for SQL operations (<code>findOne(Long id)</code>, <code>findAll()</code>, <code>deleteOne(Long id)</code> ,<code>deleteAll</code>)</li>
+<li>Quick Methods for a new <code>Select</code> and <code>Delete</code> Query</li>
+</ul>
+
+<h3>
+<a id="api-managers" class="anchor" href="#api-managers" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Managers</h3>
+
+<ul>
+<li>OkHttpClient support to make the HTTP requests for API</li>
 <li>
-<code>List&lt;? extends DBModel&gt; findAll()</code> -&gt; Returns all the records of the current <code>DBModel&lt;T&gt;</code> </li>
+<code>AbstractApiManager</code> with Retrofit based on the Environment manager API URL</li>
 <li>
-<code>void deleteOne(Long id)</code>           -&gt; Deletes the record according to the requested <code>id</code> </li>
-<li>
-<code>void deleteAll()</code>                  -&gt; Deletes all the records of the current <code>DBModel&lt;T&gt;</code>
+<code>FULL/NONE</code> logging for API based on the Environment manager <code>LOGLEVEL</code> of API</li>
+<li>AbstractAsyncTask which produces events</li>
+<li>Event Base architecture with Otto for each response after an <code>AbstractAsyncTask</code>
 </li>
-<li>
-<code>Select selectQuery()</code>              -&gt; Returns an instance of <code>Select</code> ActiveAndroid (reduce the new Object)</li>
-<li>
-<code>Delete deleteQuery()</code>              -&gt; Returns an instance of <code>Delete</code> ActiveAndroid(reduce the new Object)</li>
+<li>Access to API methods via Reflection. The only thing you must set up is the <code>ApiRequestAttrs</code>. Example in wiki</li>
 </ul>
 
-<p>eg. Let's assume that we have a <code>User</code> object which must be saved/selected/updated/delete into the SQLite Database.</p>
-
-<div class="highlight highlight-java"><pre>@Table(name <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span>)
-<span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-entc">User</span> <span class="pl-s">extends</span> <span class="pl-eoi">DBModel&lt;<span class="pl-s">User</span>&gt;</span> {
-
-    <span class="pl-s">@Column</span>(<span class="pl-c1">name</span> <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>, <span class="pl-c1">index</span> <span class="pl-ko">=</span> <span class="pl-c1">true</span>, <span class="pl-c1">unique</span> <span class="pl-ko">=</span> <span class="pl-c1">true</span>)
-    <span class="pl-s">public</span> <span class="pl-s">String</span> email;
-
-    <span class="pl-s">@Column</span>(<span class="pl-c1">name</span> <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>fname<span class="pl-pds">"</span></span>)
-    <span class="pl-s">public</span> <span class="pl-s">String</span> fname;
-
-    <span class="pl-s">@Column</span>(<span class="pl-c1">name</span> <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>lname<span class="pl-pds">"</span></span>)
-    <span class="pl-s">public</span> <span class="pl-s">String</span> lname;
-
-    <span class="pl-s">@Column</span>(<span class="pl-c1">name</span> <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>avatar<span class="pl-pds">"</span></span>)
-    <span class="pl-s">public</span> <span class="pl-s">String</span> avatar;
-
-    <span class="pl-s">public</span> <span class="pl-enf">User</span>() {
-    }
-}</pre></div>
-
-<p>We have our Database Model and now we want to access to the database. In this point I want to note that in the <code>DBModel</code> has implemented the Singletton Holder pattern in order to avoid multiple instances of the same <code>DBModel&lt;T&gt;</code>.  </p>
+<h3>
+<a id="activities" class="anchor" href="#activities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Activities</h3>
 
 <ul>
-<li>Get all available users: <br>
+<li>ButterKnife injection to use this -&gt; <code>@InjectView(R.id.btnTest)</code> to minimize and remove the old <code>(Button) findViewById(R.id.btnTest)</code>
 </li>
+<li>Each Activity/FragmentActivity registered to listen the Event BUS</li>
+<li>Customizable/Overridable action bar for each Activity/FragmentActivity</li>
 </ul>
-
-<div class="highlight highlight-java"><pre><span class="pl-s">List&lt;<span class="pl-s">User</span>&gt;</span> users <span class="pl-ko">=</span> (<span class="pl-s">List&lt;<span class="pl-s">User</span>&gt;</span>) <span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>findAll();</pre></div>
-
-<ul>
-<li>Get the available user by id: <br>
-</li>
-</ul>
-
-<div class="highlight highlight-java"><pre><span class="pl-s">User</span> searchUser <span class="pl-ko">=</span> (<span class="pl-s">User</span>) <span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>findOne(<span class="pl-cn">21L</span>);</pre></div>
-
-<ul>
-<li>Inserts a user into table: <br>
-</li>
-</ul>
-
-<div class="highlight highlight-java"><pre><span class="pl-s">User</span> user <span class="pl-ko">=</span> <span class="pl-k">new</span> <span class="pl-s">User</span>();
-user<span class="pl-ko">.</span>avatar <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>foo_bar.jpg<span class="pl-pds">"</span></span>;
-user<span class="pl-ko">.</span>email  <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>foo_bar@test.com<span class="pl-pds">"</span></span>;
-user<span class="pl-ko">.</span>lname  <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Bar<span class="pl-pds">"</span></span>;
-user<span class="pl-ko">.</span>fname  <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Foo<span class="pl-pds">"</span></span>;
-user<span class="pl-ko">.</span>save();</pre></div>
-
-<ul>
-<li>Updates a user: <br>
-</li>
-</ul>
-
-<div class="highlight highlight-java"><pre><span class="pl-s">User</span> searchUser <span class="pl-ko">=</span> (<span class="pl-s">User</span>) <span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>findOne(<span class="pl-cn">21L</span>);
-searchUser<span class="pl-ko">.</span>fname  <span class="pl-ko">=</span> <span class="pl-s1"><span class="pl-pds">"</span>FooUpdate<span class="pl-pds">"</span></span>;
-searchUser<span class="pl-ko">.</span>save();</pre></div>
-
-<ul>
-<li>Delete all users: <br>
-</li>
-</ul>
-
-<div class="highlight highlight-java"><pre><span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>deleteAll();</pre></div>
-
-<ul>
-<li>Delete a user by id: <br>
-</li>
-</ul>
-
-<div class="highlight highlight-java"><pre><span class="pl-s">DBModel</span><span class="pl-ko">.</span>getInstance(<span class="pl-s">User</span><span class="pl-ko">.</span>class)<span class="pl-ko">.</span>deleteOne(<span class="pl-cn">21L</span>);</pre></div>
-
-<p>To be contiuned with details for API requests. Stay tuned :)</p>
       </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Rapidandroidapp maintained by <a href="https://github.com/spirosoik">spirosoik</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/spirosoik">spirosoik</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
-    
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-56813628-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
 
   </body>
 </html>
