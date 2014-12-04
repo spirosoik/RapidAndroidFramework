@@ -5,87 +5,47 @@ Rapid Android Development Template
 Android Studio 0.8.x and Gradle 2.x
 
 ## IDE Tools
-* Dagger Plugin
-* Android ButterKnife Zelezny
-* Libraries
-* Active Android 3.1.10
-* Retrofit 1.7.0
-* OkHttp 2.0.0
-* Otto Eventbus 1.3.5
-* Dagger 1.2.2
-* ButterKnife 5.1.2
-* Otto Picasso 2.3.2
+* [Dagger Plugin] (https://github.com/square/dagger-intellij-plugin)
+* [Android ButterKnife Zelezny] (http://plugins.jetbrains.com/plugin/7369)
 
-## Future Integration
-* UI validation library Saripaar
+## Libraries
+* [Active Android 3.1.10](https://github.com/pardom/ActiveAndroid)
+* [Retrofit 1.7.0](http://square.github.io/retrofit/)
+* [OkHttp 2.0.0](http://square.github.io/okhttp/)
+* [Otto Eventbus 1.3.5](http://square.github.io/otto/)
+* [Dagger 1.2.2](http://square.github.io/dagger/)
+* [ButterKnife 5.1.2](https://github.com/JakeWharton/butterknife)
+* [Otto Picasso 2.3.2] (http://square.github.io/picasso/)
+* [UI validation library Saripaar](https://github.com/ragunathjawahar/android-saripaar)
 
 ## 3rd Parties Social
 * Facebook SDK as a git module
 
-## Example how to use SQLite Databse
-For quick and easy access to the database, it have been used the ActiveRecord pattern via the ActiveAndroid Library. Into the source code there is a class DBModel<T> which can be used from any OBject/class which want to have access to the SQLite Database. The DBModel<T> extends Model which includes all the necessary methods for accessing the database as load, save, delete, getId.
+## Implemented
 
-The DBModel<T> class includes some extra methods according to the type <T> and some helpers which can be used and they are the followings:
+### Gradle
+* Gradle configuration for multi-environment support
 
-* ```DBModel findOne(Long id) ``` -> Returns the record according to the requested id
-* ```List<? extends DBModel> findAll()``` -> Returns all the records of the current ```DBModel<T>```
-* ```void deleteOne(Long id)``` -> Deletes the record according to the requested id
-* ```void deleteAll()``` -> Deletes all the records of the current ```DBModel<T>```
-* ```Select selectQuery()``` -> Returns an instance of Select ActiveAndroid (reduce the new Object)
-* ```Delete deleteQuery()``` -> Returns an instance of Delete ActiveAndroid(reduce the new Object)
-* eg. Let's assume that we have a User object which must be saved/selected/updated/delete into the SQLite Database.
-```java
-@Table(name = 'user')
-public class User extends DBModel<User> {
+### Environment Manager
+* Multi-environment support (```LIVE```, ```STAGING```, ```UAT```)
+* Decides the environment for the current build
+* Decides the app's base API URL for the current build
+* Decides the app's API logging level for the current build
 
-    @Column(name = "email", index = true, unique = true)
-    public String email;
+### SQLite Database
+* ```DBModel``` class to extend for each Object/Model you want to have access in database.
+* Public methods for SQL operations (```findOne(Long id)```, ```findAll()```, ```deleteOne(Long id)``` ,```deleteAll```)
+* Quick Methods for a new ```Select``` and ```Delete``` Query
 
-    @Column(name = "fname")
-    public String fname;
+### API Managers
+* OkHttpClient support to make the HTTP requests for API
+* ```AbstractApiManager``` with Retrofit based on the Environment manager API URL
+* ```FULL/NONE``` logging for API based on the Environment manager ```LOGLEVEL``` of API
+* AbstractAsyncTask which produces events
+* Event Base architecture with Otto for each response after an ```AbstractAsyncTask```
+* Access to API methods via Reflection. The only thing you must set up is the ```ApiRequestAttrs```. Example in wiki
 
-    @Column(name = "lname")
-    public String lname;
-
-    @Column(name = "avatar")
-    public String avatar;
-
-    public User() {
-    }
-}
-```
-We have our Database Model and now we want to access to the database. In this point I want to note that in the DBModel has implemented the Singletton Holder pattern in order to avoid multiple instances of the same DBModel<T>.
-
-* Get all available users:
-```java 
-    List<User> users = (List<User>) DBModel.getInstance(User.class).findAll();
-```
-* Get the available user by id:
-User searchUser = (User) DBModel.getInstance(User.class).findOne(21L);
-
-* Inserts a user into table:
-```java 
-User user = new User();
-user.avatar = "foo_bar.jpg";
-user.email  = "foo_bar@test.com";
-user.lname  = "Bar";
-user.fname  = "Foo";
-user.save();
-```
-
-* Updates a user:
-```java 
-User searchUser = (User) DBModel.getInstance(User.class).findOne(21L);
-searchUser.fname  = "FooUpdate";
-searchUser.save();
-```
-* Delete all users:
-```java
-DBModel.getInstance(User.class).deleteAll();
-```
-
-* Delete a user by id:
-```java
-DBModel.getInstance(User.class).deleteOne(21L);
-```
-To be contiuned with details for API requests. Stay tuned :)
+### Activities
+* ButterKnife injection to use this -> ```@InjectView(R.id.btnTest)``` to minimize and remove the old ```(Button) findViewById(R.id.btnTest)```
+* Each Activity/FragmentActivity registered to listen the Event BUS
+* Customizable/Overridable action bar for each Activity/FragmentActivity
