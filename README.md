@@ -31,6 +31,8 @@ Android Studio 0.8.x and Gradle 2.x
 * Decides the environment for the current build
 * Decides the app's base API URL for the current build
 * Decides the app's API logging level for the current build
+* Decides the app's logging level for the current build
+* Decides if the app according to the environment can track data or not
 
 ### SQLite Database
 * ```DBModel``` class to extend for each Object/Model you want to have access in database.
@@ -46,6 +48,12 @@ Android Studio 0.8.x and Gradle 2.x
 * Access to API methods via Reflection. The only thing you must set up is the ```ApiRequestAttrs```. Example in wiki
 
 ### Activities
+* Dagger for dependency injection
 * ButterKnife injection to use this -> ```@InjectView(R.id.btnTest)``` to minimize and remove the old ```(Button) findViewById(R.id.btnTest)```
 * Each Activity/FragmentActivity registered to listen the Event BUS
 * Customizable/Overridable action bar for each Activity/FragmentActivity
+* ```AbstractFragmentActivity``` to extended by each Fragment activity and it can contains the fragment you want. You must implement only the createFragment method
+* ```BaseFragment``` to be extended by each fragment as generic fragment
+
+### Google Analytics
+* Support for google analytics track events and pageviews. Use ```AnalyticsManager```
