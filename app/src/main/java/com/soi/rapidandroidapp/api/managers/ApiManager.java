@@ -4,6 +4,11 @@ package com.soi.rapidandroidapp.api.managers;
 import com.soi.rapidandroidapp.api.common.AbstractApiManager;
 import com.soi.rapidandroidapp.api.interceptors.ApiRequestInterceptor;
 import com.soi.rapidandroidapp.api.services.AppApiService;
+import com.soi.rapidandroidapp.managers.EnvironmentManager;
+import com.soi.rapidandroidapp.models.common.Environment;
+import com.soi.rapidandroidapp.modules.Injector;
+
+import javax.inject.Inject;
 
 import retrofit.RestAdapter;
 
@@ -13,6 +18,9 @@ import retrofit.RestAdapter;
  * This class handles all the api requests
  */
 public class ApiManager extends AbstractApiManager<AppApiService> {
+
+    @Inject
+    EnvironmentManager environmentManager;
 
     private static ApiManager mInstance;
 
@@ -25,7 +33,7 @@ public class ApiManager extends AbstractApiManager<AppApiService> {
 
     public ApiManager()
     {
-        RestAdapter.Builder restAdapterBuilder = this.getDefaultRestAdapterBuilder();
+        RestAdapter.Builder restAdapterBuilder = getDefaultRestAdapterBuilder();
         // Add extra options to rest adapter
         RestAdapter restAdapter = restAdapterBuilder.setRequestInterceptor(new ApiRequestInterceptor()).build();
         this.service = restAdapter.create(AppApiService.class);
@@ -34,5 +42,10 @@ public class ApiManager extends AbstractApiManager<AppApiService> {
     @Override
     public Object execute(String action, Object... args) {
         return null;
+    }
+
+    @Override
+    protected String getApiUrl() {
+        return environmentManager.getEnviromentApiUrl();
     }
 }

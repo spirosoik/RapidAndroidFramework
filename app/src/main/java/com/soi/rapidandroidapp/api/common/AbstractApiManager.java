@@ -5,8 +5,11 @@ import android.util.Log;
 import com.soi.rapidandroidapp.api.GsonInstance;
 import com.soi.rapidandroidapp.api.managers.common.AbstractAsyncTask;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
+import com.soi.rapidandroidapp.modules.Injector;
 import com.soi.rapidandroidapp.utilities.ReflectionUtils;
 import com.squareup.okhttp.OkHttpClient;
+
+import javax.inject.Inject;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -18,11 +21,20 @@ import retrofit.converter.GsonConverter;
  */
 public abstract class AbstractApiManager<T> extends AbstractAsyncTask implements BaseApiManager<T> {
 
+    @Inject
+    EnvironmentManager environmentManager;
+
     protected static final String TAG_LOG_NAME = Class.class.getSimpleName();
+
+    protected abstract String getApiUrl();
 
     public T service;
 
     private GsonInstance gsonInstance = new GsonInstance();
+
+    protected AbstractApiManager() {
+        Injector.inject(this);
+    }
 
     @Override
     public RestAdapter.Builder getDefaultRestAdapterBuilder()
@@ -30,10 +42,10 @@ public abstract class AbstractApiManager<T> extends AbstractAsyncTask implements
         OkHttpClient httpClient = new OkHttpClient();
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
-                .setEndpoint(EnvironmentManager.getInstance().getEnviromentApiUrl())
+                .setEndpoint(getApiUrl())
                 .setClient(new OkClient(httpClient))
                 .setConverter(new GsonConverter(GsonInstance.gson))
-                .setLogLevel(EnvironmentManager.getInstance().getEnvironmentApiLogLevel())
+                .setLogLevel(environmentManager.getEnvironmentApiLogLevel())
                 .setLog(new RestAdapter.Log() { //
                     @Override
                     public void log(String msg) {

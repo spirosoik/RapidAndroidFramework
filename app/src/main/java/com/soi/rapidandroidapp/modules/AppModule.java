@@ -3,6 +3,7 @@ package com.soi.rapidandroidapp.modules;
 import android.content.Context;
 
 import com.soi.rapidandroidapp.BaseApplication;
+import com.soi.rapidandroidapp.api.common.AbstractApiManager;
 import com.soi.rapidandroidapp.api.managers.ApiManager;
 import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
@@ -34,7 +35,9 @@ import dagger.Provides;
                 AbstractFragmentActivity.class,
                 MainActivity.class,
                 LoginActivity.class,
-                LoggerWrapper.class
+                LoggerWrapper.class,
+                FoursquareApiManager.class,
+                ApiManager.class,
         },
         library = true
 )
