@@ -87,4 +87,23 @@ public class EnvironmentManager {
         }
         return logLevel;
     }
+
+    /**
+     * Returns true of false if I can track in google
+     * analytics according to the environment
+     * You can change it as you want
+     * @return
+     */
+    public boolean canTrackGA()
+    {
+        boolean canTrack = false;
+        if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
+            canTrack = false;
+        }  else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
+            canTrack = true;
+        } else if (BuildConfig.ENVIRONMENT.equals("UAT")) {
+            canTrack = true;
+        }
+        return canTrack;
+    }
 }

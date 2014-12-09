@@ -5,6 +5,8 @@ import android.content.Context;
 import com.soi.rapidandroidapp.BaseApplication;
 import com.soi.rapidandroidapp.api.managers.ApiManager;
 import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
+import com.soi.rapidandroidapp.managers.EnvironmentManager;
+import com.soi.rapidandroidapp.managers.NetworkManager;
 import com.soi.rapidandroidapp.managers.SessionManager;
 import com.soi.rapidandroidapp.ui.LoginActivity;
 import com.soi.rapidandroidapp.ui.common.BaseFragmentActivity;
@@ -36,6 +38,20 @@ public class AppModule {
     SessionManager provideSessionManager(Context context)
     {
         return new SessionManager(context);
+    }
+
+    @Provides
+    @Singleton
+    NetworkManager provideNetworkManager(Context context)
+    {
+        return NetworkManager.getInstance(context);
+    }
+
+    @Provides
+    @Singleton
+    EnvironmentManager provideEnvironmentManager()
+    {
+        return EnvironmentManager.getInstance();
     }
 
     @Provides

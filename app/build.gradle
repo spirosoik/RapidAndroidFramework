@@ -15,7 +15,7 @@ android {
     buildTypes {
         release {
             buildConfigField "String", "ENVIRONMENT", "\"LIVE\""
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -42,7 +42,8 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:21.0.+"
+    compile 'com.android.support:appcompat-v7:21.+'
+    compile 'com.google.android.gms:play-services:6.5.+'
     compile 'com.mobsandgeeks:android-saripaar:1.0.2'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.github.eluleci:flatui:3.0.0'

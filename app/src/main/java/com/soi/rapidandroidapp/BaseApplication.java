@@ -5,9 +5,13 @@ import android.app.Instrumentation;
 import android.content.Context;
 
 import com.activeandroid.ActiveAndroid;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.soi.rapidandroidapp.api.GsonInstance;
 import com.soi.rapidandroidapp.modules.Injector;
 import com.soi.rapidandroidapp.modules.RootModule;
+
+import java.util.HashMap;
 
 /**
  * Created by spirosoikonomakis on 3/9/14.
@@ -15,6 +19,12 @@ import com.soi.rapidandroidapp.modules.RootModule;
 public class BaseApplication extends Application {
 
     private static BaseApplication instance;
+
+    public enum TrackerName {
+        APP_TRACKER, // Tracker used only in this app.
+        GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
+        ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
+    }
 
     public BaseApplication() {
 
@@ -49,6 +59,19 @@ public class BaseApplication extends Application {
         // Perform injection
         Injector.init(getRootModule(), this);
 
+    }
+
+    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+
+    public synchronized Tracker getTracker(TrackerName trackerId) {
+
+        if (!mTrackers.containsKey(trackerId)) {
+
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            Tracker t = analytics.newTracker(getString(R.string.ga_property_id));
+            mTrackers.put(trackerId, t);
+        }
+        return mTrackers.get(trackerId);
     }
 
     public static BaseApplication getInstance() {

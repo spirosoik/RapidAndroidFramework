@@ -3,32 +3,33 @@ package com.soi.rapidandroidapp.models;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.soi.rapidandroidapp.database.TABLE_NAMES;
+import com.soi.rapidandroidapp.database.UserContract;
 import com.soi.rapidandroidapp.models.common.DBModel;
 
-@Table(name = TABLE_NAMES.USER)
+@Table(name = UserContract.UserEntry.TABLE_NAME)
 public class User extends DBModel<User> {
 
 	public static String AUTH_TOKEN_KEY = "auth_token";
 
-    @Column(name = "user_id", index = true, unique = true)
-    public Long userId;
+    @Column(name = UserContract.UserEntry.COLUMN_NAME_USERID, index = true, unique = true)
+    private Long userId;
 
-    @Column(name = "token", index = true, unique = true)
-    public String authToken;
+    @Column(name = UserContract.UserEntry.COLUMN_NAME_TOKEN, index = true, unique = true)
+    private String authToken;
 
-    @Column(name = "email", index = true, unique = true)
-    public String email;
+    @Column(name = UserContract.UserEntry.COLUMN_NAME_EMAIL, index = true, unique = true)
+    private String email;
 
-    @Column(name = "fname")
-    public String fname;
+    @Column(name = UserContract.UserEntry.COLUMN_NAME_FNAME)
+    private String fname;
 
-    @Column(name = "lname")
-    public String lname;
+    @Column(name = UserContract.UserEntry.COLUMN_NAME_LNAME)
+    private String lname;
 
-    @Column(name = "avatar")
-    public String avatar;
+    @Column(name = UserContract.UserEntry.COLUMN_NAME_AVATAR)
+    private String avatar;
 
-    public User() {
+    private User() {
     }
 
     public User(Long userId, String authToken) {
