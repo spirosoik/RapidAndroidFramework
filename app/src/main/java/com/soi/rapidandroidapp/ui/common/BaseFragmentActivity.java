@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.soi.rapidandroidapp.BaseApplication;
 import com.soi.rapidandroidapp.events.common.BusProvider;
 import com.soi.rapidandroidapp.managers.AnalyticsManager;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
@@ -43,8 +44,12 @@ public class BaseFragmentActivity  extends FragmentActivity {
         super.onCreate(savedInstanceState);
         initActionBar();
 
-        if (SCREEN_NAME != null && environmentManager.canTrackGA())
-            AnalyticsManager.getInstance().trackScreenView(SCREEN_NAME);
+        if (environmentManager.canTrackGA()) {
+            AnalyticsManager.getInstance().initTracker(this, BaseApplication.TrackerName.APP_TRACKER);
+
+            if (SCREEN_NAME != null)
+                AnalyticsManager.getInstance().trackScreenView(SCREEN_NAME);
+        }
     }
 
     @Override
