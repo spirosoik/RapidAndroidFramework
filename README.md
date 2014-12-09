@@ -21,6 +21,11 @@ Android Studio 0.8.x and Gradle 2.x
 ## 3rd Parties Social
 * Facebook SDK as a git module
 
+## Check the documentation
+
+* [Wiki](https://github.com/spirosoik/RapidAndroidApp/wiki)
+
+
 ## Implemented
 
 ### Gradle
