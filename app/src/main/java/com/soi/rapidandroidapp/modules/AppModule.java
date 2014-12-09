@@ -2,7 +2,6 @@ package com.soi.rapidandroidapp.modules;
 
 import android.content.Context;
 
-import com.facebook.internal.Logger;
 import com.soi.rapidandroidapp.BaseApplication;
 import com.soi.rapidandroidapp.api.managers.ApiManager;
 import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
@@ -11,7 +10,9 @@ import com.soi.rapidandroidapp.managers.LoggerWrapper;
 import com.soi.rapidandroidapp.managers.NetworkManager;
 import com.soi.rapidandroidapp.managers.SessionManager;
 import com.soi.rapidandroidapp.ui.LoginActivity;
-import com.soi.rapidandroidapp.ui.common.BaseFragmentActivity;
+import com.soi.rapidandroidapp.ui.MainActivity;
+import com.soi.rapidandroidapp.ui.common.AbstractActivity;
+import com.soi.rapidandroidapp.ui.common.AbstractFragmentActivity;
 import com.soi.rapidandroidapp.utilities.DialogsHelper;
 import com.soi.rapidandroidapp.utilities.Utils;
 
@@ -29,7 +30,9 @@ import dagger.Provides;
 
         injects = {
                 BaseApplication.class,
-                BaseFragmentActivity.class,
+                AbstractActivity.class,
+                AbstractFragmentActivity.class,
+                MainActivity.class,
                 LoginActivity.class,
                 LoggerWrapper.class
         },
