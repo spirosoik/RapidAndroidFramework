@@ -2,10 +2,12 @@ package com.soi.rapidandroidapp.modules;
 
 import android.content.Context;
 
+import com.facebook.internal.Logger;
 import com.soi.rapidandroidapp.BaseApplication;
 import com.soi.rapidandroidapp.api.managers.ApiManager;
 import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
+import com.soi.rapidandroidapp.managers.LoggerWrapper;
 import com.soi.rapidandroidapp.managers.NetworkManager;
 import com.soi.rapidandroidapp.managers.SessionManager;
 import com.soi.rapidandroidapp.ui.LoginActivity;
@@ -28,18 +30,29 @@ import dagger.Provides;
         injects = {
                 BaseApplication.class,
                 BaseFragmentActivity.class,
-                LoginActivity.class
+                LoginActivity.class,
+                LoggerWrapper.class
         },
         library = true
 )
 public class AppModule {
 
+    /**
+     * Provides a SessionManager for injection based on context
+     * @param context
+     * @return
+     */
     @Provides
     SessionManager provideSessionManager(Context context)
     {
         return new SessionManager(context);
     }
 
+    /**
+     * Provides a singleton of NetworkManager for injection based on context
+     * @param context
+     * @return
+     */
     @Provides
     @Singleton
     NetworkManager provideNetworkManager(Context context)
@@ -47,6 +60,10 @@ public class AppModule {
         return NetworkManager.getInstance(context);
     }
 
+    /**
+     * Provides a singleton of EnvironmentManager for injection
+     * @return
+     */
     @Provides
     @Singleton
     EnvironmentManager provideEnvironmentManager()
@@ -54,6 +71,10 @@ public class AppModule {
         return EnvironmentManager.getInstance();
     }
 
+    /**
+     * Provides a singleton of ApiManager for injection
+     * @return
+     */
     @Provides
     @Singleton
     ApiManager provideApiManager()
@@ -61,6 +82,10 @@ public class AppModule {
         return ApiManager.getInstance();
     }
 
+    /**
+     * Provides a singleton of FoursquareApiManager for injection
+     * @return
+     */
     @Provides
     @Singleton
     FoursquareApiManager provideFoursquareApiManager()
@@ -68,6 +93,10 @@ public class AppModule {
         return FoursquareApiManager.getInstance();
     }
 
+    /**
+     * Provides a singleton of Utilities for injection
+     * @return
+     */
     @Provides
     @Singleton
     Utils provideUtilities()
@@ -76,6 +105,10 @@ public class AppModule {
         return Utils.getInstance();
     }
 
+    /**
+     * Provides a singleton of Dialogs for injection
+     * @return
+     */
     @Provides
     @Singleton
     DialogsHelper provideDialogs()

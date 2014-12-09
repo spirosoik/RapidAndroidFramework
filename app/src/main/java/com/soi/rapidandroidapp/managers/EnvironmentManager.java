@@ -1,6 +1,8 @@
 package com.soi.rapidandroidapp.managers;
 
 
+import android.util.Log;
+
 import com.soi.rapidandroidapp.BuildConfig;
 import com.soi.rapidandroidapp.models.common.Environment;
 import com.soi.rapidandroidapp.utilities.Constants;
@@ -75,15 +77,34 @@ public class EnvironmentManager {
      * if BuildConfig.environment = "debug" => returns FULL Logging
      * @return RestAdapter.LogLevel
      */
-    public RestAdapter.LogLevel getEnvironmentLogLevel()
+    public RestAdapter.LogLevel getEnvironmentApiLogLevel()
     {
         RestAdapter.LogLevel logLevel = null;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
             logLevel = RestAdapter.LogLevel.FULL;
         }  else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
-            logLevel = RestAdapter.LogLevel.NONE;
+            logLevel = RestAdapter.LogLevel.BASIC;
         } else if (BuildConfig.ENVIRONMENT.equals("UAT")) {
             logLevel = RestAdapter.LogLevel.FULL;
+        }
+        return logLevel;
+    }
+
+    /**
+     * Returns the API log level according to the current build environment.
+     * eg.
+     * if BuildConfig.environment = "debug" => returns FULL Logging
+     * @return RestAdapter.LogLevel
+     */
+    public int getEnvironmentLogLevel()
+    {
+        int logLevel = 0;
+        if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
+            logLevel = Log.DEBUG;
+        }  else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
+            logLevel = Log.INFO;
+        } else if (BuildConfig.ENVIRONMENT.equals("UAT")) {
+            logLevel = Log.VERBOSE;
         }
         return logLevel;
     }

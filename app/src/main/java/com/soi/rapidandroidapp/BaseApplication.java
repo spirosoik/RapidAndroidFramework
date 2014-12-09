@@ -18,6 +18,7 @@ import java.util.HashMap;
  */
 public class BaseApplication extends Application {
 
+    public final static String APP_NAME = "RapidAndroid";
     private static BaseApplication instance;
 
     public enum TrackerName {
