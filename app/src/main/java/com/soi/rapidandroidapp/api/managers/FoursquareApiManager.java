@@ -57,7 +57,7 @@ public class FoursquareApiManager extends AbstractApiManager<FoursquareApiServic
                 .setRequestInterceptor(new FoursquareApiRequestInterceptor())
                 .setClient(new OkClient(new OkHttpClient()))
                 .setConverter(new GsonConverter(GsonInstance.gson))
-                .setLogLevel(EnvironmentManager.getInstance().getEnvironmentLogLevel())
+                .setLogLevel(EnvironmentManager.getInstance().getEnvironmentApiLogLevel())
                 .setLog(new RestAdapter.Log() { //
                     @Override
                     public void log(String msg) {

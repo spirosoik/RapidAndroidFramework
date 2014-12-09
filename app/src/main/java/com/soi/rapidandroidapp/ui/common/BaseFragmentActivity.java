@@ -8,18 +8,43 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.soi.rapidandroidapp.events.common.BusProvider;
+import com.soi.rapidandroidapp.managers.AnalyticsManager;
+import com.soi.rapidandroidapp.managers.EnvironmentManager;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
 public class BaseFragmentActivity  extends FragmentActivity {
-    public ActionBar actionBar;
-    public String actionBarTitle;
+
+    @Inject
+    protected EnvironmentManager environmentManager;
+
+    /**
+     * The current action bar of the screen if it's
+     * exist
+     */
+    protected ActionBar actionBar;
+
+    /**
+     * The title of the actionbar if it's exist
+     */
+    protected String actionBarTitle;
+
+    /**
+     * The screen name you want to track in google analytics
+     * or logging
+     */
+    protected String SCREEN_NAME = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initActionBar();
+
+        if (SCREEN_NAME != null && environmentManager.canTrackGA())
+            AnalyticsManager.getInstance().trackScreenView(SCREEN_NAME);
     }
 
     @Override

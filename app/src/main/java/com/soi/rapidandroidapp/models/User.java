@@ -12,24 +12,24 @@ public class User extends DBModel<User> {
 	public static String AUTH_TOKEN_KEY = "auth_token";
 
     @Column(name = UserContract.UserEntry.COLUMN_NAME_USERID, index = true, unique = true)
-    private Long userId;
+    public Long userId;
 
     @Column(name = UserContract.UserEntry.COLUMN_NAME_TOKEN, index = true, unique = true)
-    private String authToken;
+    public String authToken;
 
     @Column(name = UserContract.UserEntry.COLUMN_NAME_EMAIL, index = true, unique = true)
-    private String email;
+    public String email;
 
     @Column(name = UserContract.UserEntry.COLUMN_NAME_FNAME)
-    private String fname;
+    public String fname;
 
     @Column(name = UserContract.UserEntry.COLUMN_NAME_LNAME)
-    private String lname;
+    public String lname;
 
     @Column(name = UserContract.UserEntry.COLUMN_NAME_AVATAR)
-    private String avatar;
+    public String avatar;
 
-    private User() {
+    public User() {
     }
 
     public User(Long userId, String authToken) {

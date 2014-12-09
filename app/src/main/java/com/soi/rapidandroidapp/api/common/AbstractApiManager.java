@@ -18,9 +18,10 @@ import retrofit.converter.GsonConverter;
  */
 public abstract class AbstractApiManager<T> extends AbstractAsyncTask implements BaseApiManager<T> {
 
-    public static final String TAG_LOG_NAME = Class.class.getSimpleName();
+    protected static final String TAG_LOG_NAME = Class.class.getSimpleName();
 
     public T service;
+
     private GsonInstance gsonInstance = new GsonInstance();
 
     @Override
@@ -32,7 +33,7 @@ public abstract class AbstractApiManager<T> extends AbstractAsyncTask implements
                 .setEndpoint(EnvironmentManager.getInstance().getEnviromentApiUrl())
                 .setClient(new OkClient(httpClient))
                 .setConverter(new GsonConverter(GsonInstance.gson))
-                .setLogLevel(EnvironmentManager.getInstance().getEnvironmentLogLevel())
+                .setLogLevel(EnvironmentManager.getInstance().getEnvironmentApiLogLevel())
                 .setLog(new RestAdapter.Log() { //
                     @Override
                     public void log(String msg) {
