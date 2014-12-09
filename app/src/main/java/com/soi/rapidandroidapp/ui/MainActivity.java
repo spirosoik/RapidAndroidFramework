@@ -1,24 +1,20 @@
 package com.soi.rapidandroidapp.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.soi.rapidandroidapp.R;
 import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
 import com.soi.rapidandroidapp.api.managers.events.FoursquareExploreEvent;
 import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.Explore;
 import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.common.Response;
-import com.soi.rapidandroidapp.events.common.BusProvider;
-import com.soi.rapidandroidapp.ui.common.BaseFragmentActivity;
+import com.soi.rapidandroidapp.ui.common.AbstractActivity;
 import com.soi.rapidandroidapp.utilities.Constants;
 import com.squareup.otto.Subscribe;
 
 import java.util.Date;
 
 
-public class MainActivity extends BaseFragmentActivity {
+public class MainActivity extends AbstractActivity {
 
     private String ll;
     private String clientId;

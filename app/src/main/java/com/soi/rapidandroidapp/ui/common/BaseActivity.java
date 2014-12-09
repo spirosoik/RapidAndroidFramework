@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.soi.rapidandroidapp.BaseApplication;
 import com.soi.rapidandroidapp.managers.AnalyticsManager;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
 
@@ -37,8 +38,13 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         initActionBar();
-        if (SCREEN_NAME != null && environmentManager.canTrackGA())
-            AnalyticsManager.getInstance().trackScreenView(SCREEN_NAME);
+
+        if (environmentManager.canTrackGA()) {
+            AnalyticsManager.getInstance().initTracker(this, BaseApplication.TrackerName.APP_TRACKER);
+
+            if (SCREEN_NAME != null)
+                AnalyticsManager.getInstance().trackScreenView(SCREEN_NAME);
+        }
     }
 
     @Override
