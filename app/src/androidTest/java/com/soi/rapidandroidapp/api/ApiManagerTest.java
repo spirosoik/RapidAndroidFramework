@@ -7,8 +7,5 @@ import android.test.InstrumentationTestCase;
  */
 public class ApiManagerTest extends InstrumentationTestCase {
 
-    public void testSingletonApiManager() throws Exception {
-
-    }
 
 }
