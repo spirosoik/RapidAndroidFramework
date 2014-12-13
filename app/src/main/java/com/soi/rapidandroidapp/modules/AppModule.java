@@ -54,6 +54,26 @@ public class AppModule {
         return new SessionManager(context);
     }
 
+	/**
+	 * Provides a singleton of FoursquareApiManager for injection
+	 * @return
+	 */
+	@Provides
+	FoursquareApiManager provideFoursquareApiManager(Context context)
+	{
+		return new FoursquareApiManager(context);
+	}
+
+	/**
+	 * Provides a singleton of ApiManager for injection
+	 * @return
+	 */
+	@Provides
+	ApiManager provideApiManager(Context context)
+	{
+		return new ApiManager(context);
+	}
+
     /**
      * Provides a singleton of NetworkManager for injection based on context
      * @param context
@@ -75,28 +95,6 @@ public class AppModule {
     EnvironmentManager provideEnvironmentManager()
     {
         return EnvironmentManager.getInstance();
-    }
-
-    /**
-     * Provides a singleton of ApiManager for injection
-     * @return
-     */
-    @Provides
-    @Singleton
-    ApiManager provideApiManager()
-    {
-        return ApiManager.getInstance();
-    }
-
-    /**
-     * Provides a singleton of FoursquareApiManager for injection
-     * @return
-     */
-    @Provides
-    @Singleton
-    FoursquareApiManager provideFoursquareApiManager()
-    {
-        return FoursquareApiManager.getInstance();
     }
 
     /**

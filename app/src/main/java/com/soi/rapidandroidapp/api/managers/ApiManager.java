@@ -1,6 +1,8 @@
 package com.soi.rapidandroidapp.api.managers;
 
 
+import android.content.Context;
+
 import com.soi.rapidandroidapp.api.common.AbstractApiManager;
 import com.soi.rapidandroidapp.api.interceptors.ApiRequestInterceptor;
 import com.soi.rapidandroidapp.api.services.AppApiService;
@@ -22,17 +24,11 @@ public class ApiManager extends AbstractApiManager<AppApiService> {
     @Inject
     EnvironmentManager environmentManager;
 
-    private static ApiManager mInstance;
+	private Context mContext;
 
-    public static synchronized ApiManager getInstance()
+    public ApiManager(Context context)
     {
-        if (mInstance == null)
-            mInstance = new ApiManager();
-        return mInstance;
-    }
-
-    public ApiManager()
-    {
+		this.mContext = context;
         RestAdapter.Builder restAdapterBuilder = getDefaultRestAdapterBuilder();
         // Add extra options to rest adapter
         RestAdapter restAdapter = restAdapterBuilder.setRequestInterceptor(new ApiRequestInterceptor()).build();

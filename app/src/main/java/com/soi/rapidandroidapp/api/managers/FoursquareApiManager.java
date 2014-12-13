@@ -1,5 +1,6 @@
 package com.soi.rapidandroidapp.api.managers;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.soi.rapidandroidapp.api.GsonInstance;
@@ -36,19 +37,12 @@ import retrofit.converter.GsonConverter;
 public class FoursquareApiManager extends AbstractApiManager<FoursquareApiService> {
 
 
-    private static FoursquareApiManager mInstance;
+	private Context mContext;
     public static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd");
 
-    public static synchronized FoursquareApiManager getInstance()
+	public FoursquareApiManager(Context context)
     {
-        if (mInstance == null)
-            mInstance = new FoursquareApiManager();
-
-        return mInstance;
-    }
-
-    public FoursquareApiManager()
-    {
+		this.mContext = context;
         RestAdapter.Builder restAdapterBuilder = getDefaultRestAdapterBuilder();
         // Add extra options to rest adapter
         RestAdapter restAdapter = restAdapterBuilder

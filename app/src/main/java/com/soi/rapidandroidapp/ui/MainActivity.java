@@ -35,7 +35,7 @@ public class MainActivity extends AbstractActivity {
         sortByDistance = 1;
         v = FoursquareApiManager.dateFormatter.format(new Date());
 
-        FoursquareApiManager.getInstance().explore(ll, clientId, clientSecret, limit, sortByDistance, v);
+        new FoursquareApiManager(this).explore(ll, clientId, clientSecret, limit, sortByDistance, v);
     }
 
     @Subscribe
