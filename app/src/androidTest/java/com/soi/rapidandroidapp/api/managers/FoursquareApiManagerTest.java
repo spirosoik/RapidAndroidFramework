@@ -2,9 +2,14 @@ package com.soi.rapidandroidapp.api.managers;
 
 
 import android.test.InstrumentationTestCase;
+import android.test.mock.MockContext;
+
+import com.soi.rapidandroidapp.api.managers.events.FoursquareSearchEvent;
 import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.Explore;
 import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.common.Response;
 import com.soi.rapidandroidapp.api.managers.events.FoursquareExploreEvent;
+import com.soi.rapidandroidapp.api.managers.net.response.foursquare.search.SearchResult;
+import com.soi.rapidandroidapp.api.managers.net.response.foursquare.search.common.SearchResponse;
 import com.soi.rapidandroidapp.events.common.BusProvider;
 import com.soi.rapidandroidapp.utilities.Constants;
 import com.squareup.otto.Subscribe;
@@ -29,6 +34,7 @@ public class FoursquareApiManagerTest extends InstrumentationTestCase {
 	private int sortByDistance;
 	private String v;
 	private CountDownLatch signal;
+	private MockContext mockContext;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -42,28 +48,17 @@ public class FoursquareApiManagerTest extends InstrumentationTestCase {
 		sortByDistance = 1;
 		v = FoursquareApiManager.dateFormatter.format(new Date());
 		signal = new CountDownLatch(1);
-		try {
-			runTestOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					BusProvider.getInstance().register(this);
-				}
-			});
-		} catch (Throwable throwable) {
-			throwable.printStackTrace();
-		}
-
+		mockContext = new MockContext();
 	}
 
 	public void testFoursquareExplore() throws Throwable {
 		runTestOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				FoursquareApiManager.getInstance().explore(ll, clientId, clientSecret, limit, sortByDistance, v);
+				new FoursquareApiManager(mockContext).explore(ll, clientId, clientSecret, limit, sortByDistance, v);
 				BusProvider.getInstance().register(new Object() {
 					@Subscribe
-					public void onFoursquareExplore(FoursquareExploreEvent event)
-					{
+					public void onFoursquareExplore(FoursquareExploreEvent event) {
 						signal.countDown();
 						assertNotNull(event);
 
@@ -77,12 +72,34 @@ public class FoursquareApiManagerTest extends InstrumentationTestCase {
 				});
 
 			}
-
-
 		});
 		signal.await(15, TimeUnit.SECONDS);
 	}
 
+	public void testFoursquareSearch() throws Throwable {
+		runTestOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				new FoursquareApiManager(mockContext).search(intent, radius, ll, clientId, clientSecret, "ath", limit, sortByDistance, v);
+				BusProvider.getInstance().register(new Object() {
+					@Subscribe
+					public void onFoursquareExplore(FoursquareSearchEvent event)
+					{
+						signal.countDown();
+						assertNotNull(event);
 
+						SearchResult searchResult= event.response;
+						assertNotNull(searchResult);
+
+						SearchResponse response = searchResult.response;
+						assertNotNull(response);
+						assertNotNull(response.venues);
+					}
+				});
+
+			}
+		});
+		signal.await(15, TimeUnit.SECONDS);
+	}
 
 }
