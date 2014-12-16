@@ -31,6 +31,10 @@ Android Studio 0.8.x and Gradle 2.x
 ### Gradle
 * Gradle configuration for multi-environment support
 
+### Testing with
+* Roboelectric
+* Espresso
+
 ### Environment Manager
 * Multi-environment support (```LIVE```, ```STAGING```, ```UAT```)
 * Decides the environment for the current build
