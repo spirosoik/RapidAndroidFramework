@@ -32,7 +32,7 @@ Android Studio 0.8.x and Gradle 2.x
 * Gradle configuration for multi-environment support
 
 ### Testing with
-* Roboelectric
+* Robolectric
 * Espresso
 
 ### Environment Manager
