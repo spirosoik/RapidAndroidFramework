@@ -53,7 +53,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ActiveAndroid.initialize(this);
+        ActiveAndroid.initialize(getBaseContext());
 
         instance = this;
 

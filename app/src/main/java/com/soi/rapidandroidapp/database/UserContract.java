@@ -5,9 +5,11 @@ import android.provider.BaseColumns;
 /**
  * Created by Spiros I. Oikonomakis on 12/9/14.
  */
-public final class UserContract {
+public final class UserContract
+{
 
-    public static abstract class UserEntry implements BaseColumns {
+    public static abstract class UserEntry implements BaseColumns
+	{
         public static final String TABLE_NAME = "user";
         public static final String COLUMN_NAME_USERID = "user_id";
         public static final String COLUMN_NAME_TOKEN  = "token";

@@ -5,18 +5,17 @@ import android.test.ApplicationTestCase;
 
 import com.activeandroid.ActiveAndroid;
 
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
+@RunWith(RobolectricTestRunner.class)
+public class ApplicationTest extends ApplicationTestCase<BaseApplication> {
 
 
     public ApplicationTest() {
-        super(Application.class);
-    }
-
-
-    public ApplicationTest(Class<Application> applicationClass) {
-        super(applicationClass);
+        super(BaseApplication.class);
     }
 }

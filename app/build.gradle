@@ -1,6 +1,20 @@
 apply plugin: 'com.android.application'
+apply plugin: 'robolectric'
 
 android {
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+
+    dexOptions {
+        jumboMode true
+    }
+
     compileSdkVersion 21
     buildToolsVersion "21.0.2"
 
@@ -10,12 +24,13 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
     buildTypes {
         release {
             buildConfigField "String", "ENVIRONMENT", "\"LIVE\""
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -25,23 +40,32 @@ android {
             buildConfigField "String", "ENVIRONMENT", "\"UAT\""
         }
     }
+
     lintOptions {
         disable 'InvalidPackage'
     }
-    packagingOptions {
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-    }
+
     sourceSets {
 
         androidTest {
-            java.srcDirs = ['src/androidTest/java']
+            setRoot('src/androidTest')
         }
     }
+
     productFlavors {
     }
 }
 
+robolectric {
+    include '**/*Test.class'
+    exclude '**/espresso/**/*.class'
+}
+
 dependencies {
+    repositories {
+        mavenCentral()
+    }
+    compile 'com.android.support:support-v4:21.+'
     compile 'com.android.support:appcompat-v7:21.+'
     compile 'com.google.android.gms:play-services:6.5.+'
     compile 'com.mobsandgeeks:android-saripaar:1.0.2'
@@ -58,4 +82,46 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libraries:facebook-android-sdk:facebook')
+
+    // Espresso
+    /* The current combination of dependencies/versions that works with Android Studio Beta 0.8.9.
+       Subject to change with Android Studio updates/and or dependency version changes. */
+    androidTestCompile('com.jakewharton.espresso:espresso:1.1-r3') {
+        exclude group: 'com.squareup.dagger'
+    }
+    androidTestCompile('com.jakewharton.espresso:espresso-support-v4:1.1-r3') {
+            exclude group: 'com.squareup.dagger'
+    }
+    androidTestCompile 'org.hamcrest:hamcrest-integration:1.1'
+    androidTestCompile 'org.hamcrest:hamcrest-core:1.1'
+    androidTestCompile 'org.hamcrest:hamcrest-library:1.1'
+
+    androidTestCompile('junit:junit:4.11') {
+        exclude module: 'hamcrest-core'
+    }
+    androidTestCompile('org.robolectric:robolectric:2.4') {
+        exclude module: 'classworlds'
+        exclude module: 'commons-logging'
+        exclude module: 'httpclient'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-provider-api'
+    }
+    androidTestCompile 'com.squareup:fest-android:1.0.+'
+}
+apply plugin: 'idea'
+
+idea {
+    module {
+        testOutputDir = file('build/test-classes/debug')
+    }
 }
