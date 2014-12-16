@@ -1,9 +1,6 @@
 package com.soi.rapidandroidapp.api.managers;
 
-
 import android.test.InstrumentationTestCase;
-import android.test.mock.MockContext;
-
 import com.soi.rapidandroidapp.api.managers.events.FoursquareSearchEvent;
 import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.Explore;
 import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.common.Response;
@@ -14,6 +11,12 @@ import com.soi.rapidandroidapp.events.common.BusProvider;
 import com.soi.rapidandroidapp.utilities.Constants;
 import com.squareup.otto.Subscribe;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  *
  * This class handles all the api requests
  */
+@RunWith(RobolectricTestRunner.class)
 public class FoursquareApiManagerTest extends InstrumentationTestCase {
 
 	private String intent;
@@ -34,11 +38,9 @@ public class FoursquareApiManagerTest extends InstrumentationTestCase {
 	private int sortByDistance;
 	private String v;
 	private CountDownLatch signal;
-	private MockContext mockContext;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setup() throws Exception {
 		intent = "global";
 		radius = 5000;
 		ll = "40.7,-74";
@@ -47,15 +49,15 @@ public class FoursquareApiManagerTest extends InstrumentationTestCase {
 		limit = 15;
 		sortByDistance = 1;
 		v = FoursquareApiManager.dateFormatter.format(new Date());
-		signal = new CountDownLatch(1);
-		mockContext = new MockContext();
 	}
 
+	@Test
 	public void testFoursquareExplore() throws Throwable {
-		runTestOnUiThread(new Runnable() {
+		signal = new CountDownLatch(1);
+		new Runnable() {
 			@Override
 			public void run() {
-				new FoursquareApiManager(mockContext).explore(ll, clientId, clientSecret, limit, sortByDistance, v);
+				new FoursquareApiManager(Robolectric.application).explore(ll, clientId, clientSecret, limit, sortByDistance, v);
 				BusProvider.getInstance().register(new Object() {
 					@Subscribe
 					public void onFoursquareExplore(FoursquareExploreEvent event) {
@@ -72,15 +74,17 @@ public class FoursquareApiManagerTest extends InstrumentationTestCase {
 				});
 
 			}
-		});
+		};
 		signal.await(15, TimeUnit.SECONDS);
 	}
 
+	@Test
 	public void testFoursquareSearch() throws Throwable {
-		runTestOnUiThread(new Runnable() {
+		signal = new CountDownLatch(1);
+		new Runnable() {
 			@Override
 			public void run() {
-				new FoursquareApiManager(mockContext).search(intent, radius, ll, clientId, clientSecret, "ath", limit, sortByDistance, v);
+				new FoursquareApiManager(Robolectric.application).search(intent, radius, ll, clientId, clientSecret, "ath", limit, sortByDistance, v);
 				BusProvider.getInstance().register(new Object() {
 					@Subscribe
 					public void onFoursquareExplore(FoursquareSearchEvent event)
@@ -98,7 +102,7 @@ public class FoursquareApiManagerTest extends InstrumentationTestCase {
 				});
 
 			}
-		});
+		};
 		signal.await(15, TimeUnit.SECONDS);
 	}
 

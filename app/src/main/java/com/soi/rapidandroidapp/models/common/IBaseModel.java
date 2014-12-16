@@ -6,7 +6,8 @@ import com.activeandroid.query.Select;
 import java.util.Date;
 import java.util.List;
 
-public interface IBaseModel<T>  {
+public interface IBaseModel<T>
+{
 
 
 	public Date getCreatedAt();

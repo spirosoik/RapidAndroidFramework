@@ -7,13 +7,19 @@ import com.soi.rapidandroidapp.BuildConfig;
 import com.soi.rapidandroidapp.models.common.Environment;
 import com.soi.rapidandroidapp.utilities.Constants;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
 import retrofit.RestAdapter;
 
 /**
  * Created by Spiros I. Oikonomakis on 11/4/14.
  */
+@RunWith(RobolectricTestRunner.class)
 public class EnviromentManagerTest extends InstrumentationTestCase {
 
+	@Test
     public void testEnviroment()
     {
         Environment environment = EnvironmentManager.getInstance().getEnvironment();
@@ -21,6 +27,7 @@ public class EnviromentManagerTest extends InstrumentationTestCase {
         assertEquals(environment.toString(), BuildConfig.ENVIRONMENT);
     }
 
+	@Test
     public void testApiEnvironment()
     {
         String apiUrl = EnvironmentManager.getInstance().getEnviromentApiUrl();
@@ -39,6 +46,7 @@ public class EnviromentManagerTest extends InstrumentationTestCase {
         }
     }
 
+	@Test
     public void testApiLogLevel()
     {
         RestAdapter.LogLevel logLevel = EnvironmentManager.getInstance().getEnvironmentApiLogLevel();
@@ -57,6 +65,7 @@ public class EnviromentManagerTest extends InstrumentationTestCase {
         }
     }
 
+	@Test
     public void testLogLevel()
     {
         int logLevel = EnvironmentManager.getInstance().getEnvironmentLogLevel();
@@ -75,7 +84,7 @@ public class EnviromentManagerTest extends InstrumentationTestCase {
         }
     }
 
-
+	@Test
     public void testCanTrackGA()
     {
         boolean logLevel = EnvironmentManager.getInstance().canTrackGA();

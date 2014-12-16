@@ -5,6 +5,10 @@ import android.test.InstrumentationTestCase;
 
 import com.soi.rapidandroidapp.models.common.DBModel;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -12,6 +16,7 @@ import java.util.Random;
 /**
  * Created by Spiros I. Oikonomakis on 11/14/14.
  */
+@RunWith(RobolectricTestRunner.class)
 public class UserModelTest extends InstrumentationTestCase {
 
     private User user;
@@ -31,12 +36,14 @@ public class UserModelTest extends InstrumentationTestCase {
         user.fname = String.valueOf(randomizer.nextLong());
     }
 
+	@Test
     public void testSave()
     {
         user.save();
         assertNotNull(user.getId());
     }
 
+	@Test
     public void testFindOne() throws IllegalAccessException, InstantiationException
     {
         user.save();
@@ -46,6 +53,7 @@ public class UserModelTest extends InstrumentationTestCase {
         assertEquals(user.getId(), searchUser.getId());
     }
 
+	@Test
     public void testFindAll() throws IllegalAccessException, InstantiationException
     {
         user.save();
@@ -57,6 +65,7 @@ public class UserModelTest extends InstrumentationTestCase {
         }
     }
 
+	@Test
     public void testDeleteOne() throws IllegalAccessException, InstantiationException
     {
         user.save();
@@ -69,7 +78,7 @@ public class UserModelTest extends InstrumentationTestCase {
         assertNull(searchUser);
     }
 
-
+	@Test
     public void testDeleteAll() throws IllegalAccessException, InstantiationException
     {
         user.save();

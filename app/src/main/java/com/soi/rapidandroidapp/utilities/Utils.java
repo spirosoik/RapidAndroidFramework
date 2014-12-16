@@ -53,11 +53,6 @@ public class Utils {
         return _instance;
     }
 
-    public int scaleVolume(float volume, int maxVolume)
-    {
-        return (int) Math.round((volume / maxVolume) * 100);
-    }
-
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public void strictModeDisable()
     {
@@ -66,6 +61,11 @@ public class Utils {
         StrictMode.setThreadPolicy(policy);
     }
 
+	/**
+	 * Get formatted date by Stirng pattern
+	 * @param pattern
+	 * @return
+	 */
     public String getFormattedDateByPattern(String pattern)
     {
         Date dt = Calendar.getInstance().getTime();
