@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="icons">#727272</color>
+
+    <color name="list_background">#FFFFFF</color>
+    <color name="list_background_pressed">#B6B6B6</color>
+    <color name="list_divider">#272727</color>
+</resources>
