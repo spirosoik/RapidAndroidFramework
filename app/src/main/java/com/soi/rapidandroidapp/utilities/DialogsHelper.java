@@ -3,8 +3,17 @@ package com.soi.rapidandroidapp.utilities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.view.Window;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.soi.rapidandroidapp.R;
 
@@ -102,6 +111,46 @@ public class DialogsHelper {
         }
     }
 
+    /**
+     * Showing a custom styled dialog and adding actions to the buttons
+     * @param context
+     * @param title
+     * @param text
+     */
+    public Dialog getCustomDialog(Context context, String title, String text) {
+
+        final Dialog dialog = new Dialog(context,
+                android.R.style.Theme_Translucent);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.layout_dialog);
+
+        //Views
+        Button btnCancel = (Button) dialog.findViewById(R.id.btncancel);
+        TextView dialogTitle = (TextView) dialog.findViewById(R.id.dialog_title);
+        TextView dialogText = (TextView) dialog.findViewById(R.id.dialog_text);
+
+        dialogTitle.setText(title);
+        dialogText.setText(text);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+
+        });
+
+        final ImageView myImage = (ImageView) dialog.findViewById(R.id.loader);
+        myImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.rotate) );
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x7f000000));
+
+        return dialog;
+    }
+    
     /**
      * Shows a progress dialog when must run tasks,jobs for some time like an async event
      * WARNING!!! Must show the dialog in Android's runOnUiThread method of the current activity

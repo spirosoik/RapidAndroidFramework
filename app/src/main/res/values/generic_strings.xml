@@ -7,5 +7,6 @@
     <string name="txt_no_internet">no internet connection</string>
     <string name="txt_connection_provider">3G/LTE</string>
     <string name="txt_connection_wifi">WIFI</string>
+    <string name="dialog_button_txt_cancel"> Cancel </string>
 
 </resources>
