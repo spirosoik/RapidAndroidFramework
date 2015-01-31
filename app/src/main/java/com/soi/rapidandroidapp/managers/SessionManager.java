@@ -11,40 +11,31 @@ import java.util.HashMap;
 
 public class SessionManager {
 
+    // User name
+    public static final String KEY_NAME = "name";
+    // Login session token
+    public static final String KEY_TOKEN = "auth_token";
+    public static final String KEY_USER_EMAIL = "email";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_USER_ID = "userId";
+    public static final String KEY_SESSION_COOKIE_ID = "cookieId";
+    public static final String KEY_FB_TOKEN = "fbToken";
+    public static final String KEY_FIRST_TIME = "firstTime";
+    public static final String KEY_USER_FB_EMAIL = "mail";
+    private static final String PREF_NAME = "RapidAndroidAppPref";
+    // All shared preferences key
+    private static final String IS_LOGIN = "IsLoggedIn";
+    // Shared pref mode
+    protected int PRIVATE_MODE = 0;
     // Android's Shared preferences
     // to create a new session for a user
     private SharedPreferences _pref;
-
     // The shared preferences editor
     private Editor _editor;
-
     private Context _context;
 
-    // Shared pref mode
-    protected int PRIVATE_MODE = 0;
 
-    private static final String PREF_NAME = "RapidAndroidAppPref";
-
-    // All shared preferences key
-    private static final String IS_LOGIN = "IsLoggedIn";
-
-    // User name
-    public static final String KEY_NAME = "name";
-
-    // Login session token
-    public static final String KEY_TOKEN = "auth_token";
-
-    public  static final String KEY_USER_EMAIL        = "email";
-    public  static final String KEY_PASSWORD          = "password";
-    public  static final String KEY_USER_ID           = "userId";
-    public  static final String KEY_SESSION_COOKIE_ID = "cookieId";
-    public  static final String KEY_FB_TOKEN          = "fbToken";
-    public  static final String KEY_FIRST_TIME        = "firstTime";
-    public  static final String KEY_USER_FB_EMAIL     = "mail";
-
-
-    public SessionManager(Context context)
-    {
+    public SessionManager(Context context) {
         super();
         this._context = context;
         _pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -53,12 +44,12 @@ public class SessionManager {
 
     /**
      * Create login session
+     *
      * @param name
      * @param email
      * @param token
      */
-    public void createLoginSession(String name, String email, String token, String userId)
-    {
+    public void createLoginSession(String name, String email, String token, String userId) {
         _editor.putBoolean(IS_LOGIN, true);
         _editor.putString(KEY_NAME, name);
         _editor.putString(KEY_USER_EMAIL, email);
@@ -69,26 +60,24 @@ public class SessionManager {
 
     /**
      * Create FB session
+     *
      * @param userEmail
      */
-    public void createFbEmailSession(String userEmail)
-    {
+    public void createFbEmailSession(String userEmail) {
         _editor.putString(KEY_USER_FB_EMAIL, userEmail);
         _editor.commit();
 
     }
 
-    public void setUserFullName(String fullName)
-    {
-        _editor.putString(KEY_NAME,fullName);
+    public void setUserFullName(String fullName) {
+        _editor.putString(KEY_NAME, fullName);
         _editor.commit();
     }
 
     /**
      * Get Stored Session data
      */
-    public HashMap<String, String> getUserDetails()
-    {
+    public HashMap<String, String> getUserDetails() {
 
         HashMap<String, String> user = new HashMap<String, String>();
 
@@ -104,11 +93,10 @@ public class SessionManager {
      * Check login method will check user login status
      * If false it will redirect user to login page
      * Else won't do anything
-     * */
-    public void checkLogin()
-    {
+     */
+    public void checkLogin() {
         // Check login status
-        if(!this.isLoggedIn()){
+        if (!this.isLoggedIn()) {
             Intent i = new Intent(_context, LoginActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -118,9 +106,8 @@ public class SessionManager {
 
     /**
      * Clear session details
-     * */
-    public void logoutUser()
-    {
+     */
+    public void logoutUser() {
         // Clearing all data from Shared Preferences
         _editor.clear();
         _editor.commit();
@@ -133,10 +120,10 @@ public class SessionManager {
 
     /**
      * Check if user is logged in
+     *
      * @return
      */
-    public boolean isLoggedIn()
-    {
+    public boolean isLoggedIn() {
         return _pref.getBoolean(IS_LOGIN, false);
     }
 }

@@ -11,11 +11,11 @@ public class GsonInstance {
 
     public static Gson gson;
 
-	public GsonInstance() {
-		gson = new GsonBuilder()
-				.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+    public GsonInstance() {
+        gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .serializeNulls()
-				.registerTypeAdapter(Date.class, new DateTypeAdapter())
-				.create();
-	}
+                .registerTypeAdapter(Date.class, new DateTypeAdapter())
+                .create();
+    }
 }

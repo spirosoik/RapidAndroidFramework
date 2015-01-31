@@ -29,7 +29,7 @@ public class MainActivity extends AbstractActivity {
         setContentView(R.layout.activity_main);
 
         ll = "40.7,-74";
-        clientId     = Constants.FOURSQUARE_API_CLIENT_ID;
+        clientId = Constants.FOURSQUARE_API_CLIENT_ID;
         clientSecret = Constants.FOURSQUARE_API_CLIENT_SECRET;
         limit = 15;
         sortByDistance = 1;
@@ -39,8 +39,7 @@ public class MainActivity extends AbstractActivity {
     }
 
     @Subscribe
-    public void onFoursquareExplore(FoursquareExploreEvent event)
-    {
+    public void onFoursquareExplore(FoursquareExploreEvent event) {
         Explore explore = event.response;
 
         Response response = explore.response;

@@ -5,7 +5,7 @@ package com.soi.rapidandroidapp.api.managers.foursquare;
  */
 public interface FoursquareResources {
 
-    public final static String EXPLORE  = "explore";
-    public final static String SEARCH   = "search";
+    public final static String EXPLORE = "explore";
+    public final static String SEARCH = "search";
 
 }

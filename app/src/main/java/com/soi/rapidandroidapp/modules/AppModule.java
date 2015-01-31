@@ -3,7 +3,6 @@ package com.soi.rapidandroidapp.modules;
 import android.content.Context;
 
 import com.soi.rapidandroidapp.BaseApplication;
-import com.soi.rapidandroidapp.api.common.AbstractApiManager;
 import com.soi.rapidandroidapp.api.managers.ApiManager;
 import com.soi.rapidandroidapp.api.managers.FoursquareApiManager;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
@@ -26,97 +25,97 @@ import dagger.Provides;
  * Created by spirosoikonomakis on 3/9/14.
  */
 @Module
-(
-        complete = false,
+        (
+                complete = false,
 
-        injects = {
-                BaseApplication.class,
-                AbstractActivity.class,
-                AbstractFragmentActivity.class,
-                MainActivity.class,
-                LoginActivity.class,
-                LoggerWrapper.class,
-                FoursquareApiManager.class,
-                ApiManager.class,
-        },
-        library = true
-)
+                injects = {
+                        BaseApplication.class,
+                        AbstractActivity.class,
+                        AbstractFragmentActivity.class,
+                        MainActivity.class,
+                        LoginActivity.class,
+                        LoggerWrapper.class,
+                        FoursquareApiManager.class,
+                        ApiManager.class,
+                },
+                library = true
+        )
 public class AppModule {
 
     /**
      * Provides a SessionManager for injection based on context
+     *
      * @param context
      * @return
      */
     @Provides
-    SessionManager provideSessionManager(Context context)
-    {
+    SessionManager provideSessionManager(Context context) {
         return new SessionManager(context);
     }
 
-	/**
-	 * Provides a singleton of FoursquareApiManager for injection
-	 * @return
-	 */
-	@Provides
-	FoursquareApiManager provideFoursquareApiManager(Context context)
-	{
-		return new FoursquareApiManager(context);
-	}
+    /**
+     * Provides a singleton of FoursquareApiManager for injection
+     *
+     * @return
+     */
+    @Provides
+    FoursquareApiManager provideFoursquareApiManager(Context context) {
+        return new FoursquareApiManager(context);
+    }
 
-	/**
-	 * Provides a singleton of ApiManager for injection
-	 * @return
-	 */
-	@Provides
-	ApiManager provideApiManager(Context context)
-	{
-		return new ApiManager(context);
-	}
+    /**
+     * Provides a singleton of ApiManager for injection
+     *
+     * @return
+     */
+    @Provides
+    ApiManager provideApiManager(Context context) {
+        return new ApiManager(context);
+    }
 
     /**
      * Provides a singleton of NetworkManager for injection based on context
+     *
      * @param context
      * @return
      */
     @Provides
     @Singleton
-    NetworkManager provideNetworkManager(Context context)
-    {
+    NetworkManager provideNetworkManager(Context context) {
         return NetworkManager.getInstance(context);
     }
 
     /**
      * Provides a singleton of EnvironmentManager for injection
+     *
      * @return
      */
     @Provides
     @Singleton
-    EnvironmentManager provideEnvironmentManager()
-    {
+    EnvironmentManager provideEnvironmentManager() {
         return EnvironmentManager.getInstance();
     }
 
     /**
      * Provides a singleton of Utilities for injection
+     *
      * @return
      */
     @Provides
     @Singleton
-    Utils provideUtilities()
-    {
+    Utils provideUtilities() {
 
         return Utils.getInstance();
     }
 
     /**
      * Provides a singleton of Dialogs for injection
+     *
      * @return
      */
     @Provides
     @Singleton
-    DialogsHelper provideDialogs()
-    {
+    DialogsHelper provideDialogs() {
 
         return DialogsHelper.getInstance();
     }

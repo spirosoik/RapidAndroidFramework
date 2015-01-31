@@ -12,14 +12,12 @@ import com.soi.rapidandroidapp.events.common.BusProvider;
 public abstract class AbstractAsyncTask extends AsyncTask<ApiRequestAttrs, Void, Object> {
 
     @Override
-    protected void onPreExecute()
-    {
+    protected void onPreExecute() {
         super.onPreExecute();
     }
 
     @Override
-    protected Object doInBackground(ApiRequestAttrs... params)
-    {
+    protected Object doInBackground(ApiRequestAttrs... params) {
         ApiRequestAttrs apiRequestAttrs = params[0];
         AbstractApiManager apiManager = apiRequestAttrs.getApiManager();
         String resource = apiRequestAttrs.getResource();
@@ -28,8 +26,7 @@ public abstract class AbstractAsyncTask extends AsyncTask<ApiRequestAttrs, Void,
     }
 
     @Override
-    protected void onPostExecute(Object o)
-    {
+    protected void onPostExecute(Object o) {
         super.onPostExecute(o);
         if (o != null) {
             BusProvider.getInstance().post(o);

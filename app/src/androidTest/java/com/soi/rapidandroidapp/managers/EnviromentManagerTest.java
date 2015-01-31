@@ -19,17 +19,15 @@ import retrofit.RestAdapter;
 @RunWith(RobolectricTestRunner.class)
 public class EnviromentManagerTest extends InstrumentationTestCase {
 
-	@Test
-    public void testEnviroment()
-    {
+    @Test
+    public void testEnviroment() {
         Environment environment = EnvironmentManager.getInstance().getEnvironment();
         assertNotNull(environment);
         assertEquals(environment.toString(), BuildConfig.ENVIRONMENT);
     }
 
-	@Test
-    public void testApiEnvironment()
-    {
+    @Test
+    public void testApiEnvironment() {
         String apiUrl = EnvironmentManager.getInstance().getEnviromentApiUrl();
         assertNotNull(apiUrl);
 
@@ -46,9 +44,8 @@ public class EnviromentManagerTest extends InstrumentationTestCase {
         }
     }
 
-	@Test
-    public void testApiLogLevel()
-    {
+    @Test
+    public void testApiLogLevel() {
         RestAdapter.LogLevel logLevel = EnvironmentManager.getInstance().getEnvironmentApiLogLevel();
         assertNotNull(logLevel);
 
@@ -65,9 +62,8 @@ public class EnviromentManagerTest extends InstrumentationTestCase {
         }
     }
 
-	@Test
-    public void testLogLevel()
-    {
+    @Test
+    public void testLogLevel() {
         int logLevel = EnvironmentManager.getInstance().getEnvironmentLogLevel();
         assertNotNull(logLevel);
 
@@ -84,9 +80,8 @@ public class EnviromentManagerTest extends InstrumentationTestCase {
         }
     }
 
-	@Test
-    public void testCanTrackGA()
-    {
+    @Test
+    public void testCanTrackGA() {
         boolean logLevel = EnvironmentManager.getInstance().canTrackGA();
         assertNotNull(logLevel);
 

@@ -8,24 +8,27 @@ import retrofit.RestAdapter;
 public interface BaseApiManager<T> {
 
     /**
-     *  Sets the current api service
-     */
-    void setApiService(T service);
-
-    /**
      * return the current api service
+     *
      * @return
      */
     T getApiService();
 
     /**
+     * Sets the current api service
+     */
+    void setApiService(T service);
+
+    /**
      * Initialize rest adapter and returns the RetroFit rest adapter
+     *
      * @return
      */
     RestAdapter.Builder getDefaultRestAdapterBuilder();
 
     /**
      * Executes the proper API resource via Reflection
+     *
      * @param target
      * @param methodName
      * @param args
@@ -34,6 +37,7 @@ public interface BaseApiManager<T> {
 
     /**
      * Executes the proper API resource for each action separately
+     *
      * @param action
      * @param args
      */

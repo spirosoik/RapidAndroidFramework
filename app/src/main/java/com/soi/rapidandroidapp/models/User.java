@@ -2,14 +2,13 @@ package com.soi.rapidandroidapp.models;
 
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.soi.rapidandroidapp.database.TABLE_NAMES;
 import com.soi.rapidandroidapp.database.UserContract;
 import com.soi.rapidandroidapp.models.common.DBModel;
 
 @Table(name = UserContract.UserEntry.TABLE_NAME)
 public class User extends DBModel<User> {
 
-	public static String AUTH_TOKEN_KEY = "auth_token";
+    public static String AUTH_TOKEN_KEY = "auth_token";
 
     @Column(name = UserContract.UserEntry.COLUMN_NAME_USERID, index = true, unique = true)
     public Long userId;

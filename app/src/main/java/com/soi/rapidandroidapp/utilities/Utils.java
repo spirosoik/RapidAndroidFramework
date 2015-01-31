@@ -38,13 +38,13 @@ import javax.inject.Inject;
 
 public class Utils {
 
+    private static Utils _instance;
     @Inject
     DialogsHelper dialogs;
 
-    private static Utils _instance;
-
     /**
      * Singleton patter
+     *
      * @return
      */
     public static synchronized Utils getInstance() {
@@ -53,28 +53,45 @@ public class Utils {
         return _instance;
     }
 
+    /**
+     * Returns Integer for a specific
+     * value
+     *
+     * @param value
+     * @param safeReturn
+     * @return
+     */
+    public synchronized static Integer getSafeInteger(int value, Integer safeReturn) {
+        try {
+            return Integer.valueOf(value).intValue();
+        } catch (NumberFormatException ex) {
+            return safeReturn;
+        } catch (Exception e) {
+            return safeReturn;
+        }
+    }
+
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
-    public void strictModeDisable()
-    {
+    public void strictModeDisable() {
         StrictMode.ThreadPolicy policy = new StrictMode.
                 ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     }
 
-	/**
-	 * Get formatted date by Stirng pattern
-	 * @param pattern
-	 * @return
-	 */
-    public String getFormattedDateByPattern(String pattern)
-    {
+    /**
+     * Get formatted date by Stirng pattern
+     *
+     * @param pattern
+     * @return
+     */
+    public String getFormattedDateByPattern(String pattern) {
         Date dt = Calendar.getInstance().getTime();
         Formatter formatter = new Formatter();
         return formatter.format(pattern, dt).toString();
     }
 
     public void setKeepScreenOn(Activity activity, boolean keepScreenOn) {
-        if(keepScreenOn) {
+        if (keepScreenOn) {
             activity.getWindow().
                     addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } else {
@@ -83,11 +100,10 @@ public class Utils {
         }
     }
 
-    public boolean checkIfUrlExists(String url)
-    {
+    public boolean checkIfUrlExists(String url) {
         boolean result = false;
         HttpURLConnection connection = null;
-        try{
+        try {
             URL myurl = new URL(url);
             connection = (HttpURLConnection) myurl.openConnection();
             //Set request to header to reduce load as Subirkumarsao said.
@@ -106,15 +122,13 @@ public class Utils {
         return result;
     }
 
-
-
     /**
      * Check if there is an internet connection via 3G
+     *
      * @param ctx current context
      * @return
      */
-    public final boolean isOn3G(Context ctx)
-    {
+    public final boolean isOn3G(Context ctx) {
         NetworkInfo info = ((ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE))
                 .getActiveNetworkInfo();
         return info != null && info.getTypeName().toLowerCase().equals("mobile");
@@ -122,6 +136,7 @@ public class Utils {
 
     /**
      * Check if mobile device is connected to internet
+     *
      * @param act
      * @return
      */
@@ -141,38 +156,19 @@ public class Utils {
         return false;
     }
 
-    public final boolean isOnWifi(Context context)
-    {
+    public final boolean isOnWifi(Context context) {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         return mWifi.isConnected();
     }
 
     /**
-     * Returns Integer for a specific
-     * value
-     * @param value
-     * @param safeReturn
-     * @return
-     */
-    public synchronized static Integer getSafeInteger(int value, Integer safeReturn)
-    {
-        try {
-            return Integer.valueOf(value).intValue();
-        } catch (NumberFormatException ex) {
-            return safeReturn;
-        } catch (Exception e) {
-            return safeReturn;
-        }
-    }
-
-    /**
      * Open Url in Browser
+     *
      * @param ctx
      * @param url
      */
-    public void openURL(Activity ctx, String url)
-    {
+    public void openURL(Activity ctx, String url) {
         if (isConnected(ctx)) {
             try {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -187,11 +183,11 @@ public class Utils {
 
     /**
      * Lock unlock wifi for streaming
+     *
      * @param context
      * @param unlock
      */
-    public void wifiLockUnlock(Context context, boolean unlock)
-    {
+    public void wifiLockUnlock(Context context, boolean unlock) {
 
         WifiManager.WifiLock wifiLock = ((WifiManager) context.getSystemService(Context.WIFI_SERVICE))
                 .createWifiLock(WifiManager.WIFI_MODE_FULL, "radioLock");
@@ -208,30 +204,28 @@ public class Utils {
     /**
      * Get the path of the application
      * in the Android OS filesystem
+     *
      * @param ctx
      * @returnman
      */
-    public String getPath(Context ctx)
-    {
+    public String getPath(Context ctx) {
         return Environment.getExternalStorageDirectory() + "/" + ctx.getApplicationInfo().packageName.replaceAll("\\.", "") + "/";
     }
 
     /**
-     *
      * @param context
      * @param title
      * @param text
      * @return
      */
-    public Intent getIntentChooser(Context context, String title, String text, String shareUrl)
-    {
+    public Intent getIntentChooser(Context context, String title, String text, String shareUrl) {
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.setType("text/plain");
 
         // Email to Send
         Intent emailIntent = new Intent();
         emailIntent.setAction(Intent.ACTION_SEND);
-        emailIntent.putExtra(Intent.EXTRA_TEXT, title+ " "+ shareUrl);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, title + " " + shareUrl);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, title);
         emailIntent.setType("message/rfc822");
 
@@ -246,27 +240,28 @@ public class Utils {
             String packageName = ri.activityInfo.packageName;
             if (ri.activityInfo.packageName.endsWith(".gm") || ri.activityInfo.name.toLowerCase().contains("gmail")) {
                 emailIntent.setClassName(ri.activityInfo.packageName, ri.activityInfo.name);
-            } else if(packageName.contains("twitter") || packageName.contains("facebook")) {
+            } else if (packageName.contains("twitter") || packageName.contains("facebook")) {
                 Intent intent = new Intent();
                 intent.setComponent(new ComponentName(packageName, ri.activityInfo.name));
                 intent.setAction(Intent.ACTION_SEND);
                 intent.setType("text/plain");
 
-                if(packageName.contains("twitter")) {
-                    intent.putExtra(Intent.EXTRA_TEXT, title+ " "+ shareUrl);
-                } else if(packageName.contains("facebook")) {
+                if (packageName.contains("twitter")) {
+                    intent.putExtra(Intent.EXTRA_TEXT, title + " " + shareUrl);
+                } else if (packageName.contains("facebook")) {
                     intent.putExtra(Intent.EXTRA_TEXT, shareUrl);
                 }
                 intentList.add(new LabeledIntent(intent, packageName, ri.loadLabel(pm), ri.icon));
             }
         }
-        LabeledIntent[] extraIntents = intentList.toArray( new LabeledIntent[intentList.size()]);
+        LabeledIntent[] extraIntents = intentList.toArray(new LabeledIntent[intentList.size()]);
         openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, extraIntents);
         return openInChooser;
     }
 
     /**
      * Email text validation
+     *
      * @param email
      * @return
      */
