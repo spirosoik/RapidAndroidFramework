@@ -7,7 +7,7 @@ import retrofit.RequestInterceptor;
 
 /**
  * Created by Spiros I. Oikonomakis on 10/31/14.
- *
+ * <p/>
  * RequestInterceptor with HTTP headers for the BASE API
  */
 public class FoursquareApiRequestInterceptor implements RequestInterceptor {
@@ -26,7 +26,7 @@ public class FoursquareApiRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void intercept(RequestFacade request) {
-        if (headers.size()  > 0) {
+        if (headers.size() > 0) {
             for (Map.Entry<String, String> header : headers.entrySet()) {
                 request.addHeader(header.getKey(), header.getValue());
             }

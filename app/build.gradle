@@ -16,7 +16,7 @@ android {
     }
 
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "com.soi.rapidandroidapp"
@@ -82,20 +82,19 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libraries:facebook-android-sdk:facebook')
-
     // Espresso
+
     /* The current combination of dependencies/versions that works with Android Studio Beta 0.8.9.
-       Subject to change with Android Studio updates/and or dependency version changes. */
+           Subject to change with Android Studio updates/and or dependency version changes. */
     androidTestCompile('com.jakewharton.espresso:espresso:1.1-r3') {
         exclude group: 'com.squareup.dagger'
     }
     androidTestCompile('com.jakewharton.espresso:espresso-support-v4:1.1-r3') {
-            exclude group: 'com.squareup.dagger'
+        exclude group: 'com.squareup.dagger'
     }
     androidTestCompile 'org.hamcrest:hamcrest-integration:1.1'
     androidTestCompile 'org.hamcrest:hamcrest-core:1.1'
     androidTestCompile 'org.hamcrest:hamcrest-library:1.1'
-
     androidTestCompile('junit:junit:4.11') {
         exclude module: 'hamcrest-core'
     }

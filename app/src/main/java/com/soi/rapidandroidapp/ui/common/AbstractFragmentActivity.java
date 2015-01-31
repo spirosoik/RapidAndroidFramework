@@ -2,7 +2,6 @@ package com.soi.rapidandroidapp.ui.common;
 
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -44,6 +43,7 @@ public abstract class AbstractFragmentActivity extends FragmentActivity {
 
     /**
      * Creates the fragment you want to show
+     *
      * @return
      */
     protected abstract Fragment createFragment();
@@ -100,8 +100,7 @@ public abstract class AbstractFragmentActivity extends FragmentActivity {
     }
 
 
-    public void initActionBar()
-    {
+    public void initActionBar() {
         actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);

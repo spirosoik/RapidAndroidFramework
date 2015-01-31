@@ -11,10 +11,10 @@ import retrofit.RestAdapter;
 
 /**
  * Created by Spiros I. Oikonomakis on 11/4/14.
- *
+ * <p/>
  * This class handles all the available enviroments according
  * to the build types.
- *
+ * <p/>
  * TODO: maybe use variants also
  */
 public class EnvironmentManager {
@@ -23,11 +23,11 @@ public class EnvironmentManager {
 
     /**
      * Singleton
+     *
      * @return EnvironmentManager
      */
-    public static synchronized EnvironmentManager getInstance()
-    {
-        if ( mInstance == null ) {
+    public static synchronized EnvironmentManager getInstance() {
+        if (mInstance == null) {
             mInstance = new EnvironmentManager();
         }
         return mInstance;
@@ -37,14 +37,14 @@ public class EnvironmentManager {
      * Returns the url of the current build type.
      * eg.
      * if BuildConfig.environment = "debug" => returns staging Environment
+     *
      * @return Environment
      */
-    public Environment getEnvironment()
-    {
+    public Environment getEnvironment() {
         Environment environment = null;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
             environment = Environment.STAGING;
-        }  else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
+        } else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
             environment = Environment.LIVE;
         } else if (BuildConfig.ENVIRONMENT.equals("UAT")) {
             environment = Environment.UAT;
@@ -56,14 +56,14 @@ public class EnvironmentManager {
      * Returns the url of the current build type.
      * eg.
      * if BuildConfig.environment = "debug" => returns staging URL
+     *
      * @return String
      */
-    public String getEnviromentApiUrl()
-    {
+    public String getEnviromentApiUrl() {
         String apiUrl = null;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
             apiUrl = Constants.API_STAGING_URL;
-        }  else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
+        } else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
             apiUrl = Constants.API_LIVE_URL;
         } else if (BuildConfig.ENVIRONMENT.equals("UAT")) {
             apiUrl = Constants.API_UAT_URL;
@@ -75,14 +75,14 @@ public class EnvironmentManager {
      * Returns the API log level according to the current build environment.
      * eg.
      * if BuildConfig.environment = "debug" => returns FULL Logging
+     *
      * @return RestAdapter.LogLevel
      */
-    public RestAdapter.LogLevel getEnvironmentApiLogLevel()
-    {
+    public RestAdapter.LogLevel getEnvironmentApiLogLevel() {
         RestAdapter.LogLevel logLevel = null;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
             logLevel = RestAdapter.LogLevel.FULL;
-        }  else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
+        } else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
             logLevel = RestAdapter.LogLevel.BASIC;
         } else if (BuildConfig.ENVIRONMENT.equals("UAT")) {
             logLevel = RestAdapter.LogLevel.FULL;
@@ -94,14 +94,14 @@ public class EnvironmentManager {
      * Returns the API log level according to the current build environment.
      * eg.
      * if BuildConfig.environment = "debug" => returns FULL Logging
+     *
      * @return RestAdapter.LogLevel
      */
-    public int getEnvironmentLogLevel()
-    {
+    public int getEnvironmentLogLevel() {
         int logLevel = 0;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
             logLevel = Log.DEBUG;
-        }  else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
+        } else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
             logLevel = Log.INFO;
         } else if (BuildConfig.ENVIRONMENT.equals("UAT")) {
             logLevel = Log.VERBOSE;
@@ -113,14 +113,14 @@ public class EnvironmentManager {
      * Returns true of false if I can track in google
      * analytics according to the environment
      * You can change it as you want
+     *
      * @return
      */
-    public boolean canTrackGA()
-    {
+    public boolean canTrackGA() {
         boolean canTrack = false;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
             canTrack = false;
-        }  else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
+        } else if (BuildConfig.ENVIRONMENT.equals("LIVE")) {
             canTrack = true;
         } else if (BuildConfig.ENVIRONMENT.equals("UAT")) {
             canTrack = true;

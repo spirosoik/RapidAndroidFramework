@@ -14,14 +14,14 @@ import java.util.Map;
 /**
  * This is Abstract Model for the app's database.
  * Supports the ActiveRecord for android
+ *
  * @param <T> It's the type of the current Object you want to be used as a Database Model
  */
-public class DBModel<T> extends Model implements IBaseModel<DBModel>,Comparable<T>, Serializable
-{
+public class DBModel<T> extends Model implements IBaseModel<DBModel>, Comparable<T>, Serializable {
 
     private static final DBModel instance = new DBModel();
 
-    private Map<Class,Object> singletonHolder = new HashMap<Class,Object>();
+    private Map<Class, Object> singletonHolder = new HashMap<Class, Object>();
 
     @Column(name = "created_at")
     private Date createdAt = new Date();
@@ -31,20 +31,20 @@ public class DBModel<T> extends Model implements IBaseModel<DBModel>,Comparable<
 
     /**
      * Singletton pattern for each model which extends this DBModel class
+     *
      * @param classOf
      * @param <T>
      * @return
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public static <T> T getInstance(Class<T> classOf) throws InstantiationException, IllegalAccessException
-    {
-        synchronized(instance){
-            if(!instance.singletonHolder.containsKey(classOf)){
+    public static <T> T getInstance(Class<T> classOf) throws InstantiationException, IllegalAccessException {
+        synchronized (instance) {
+            if (!instance.singletonHolder.containsKey(classOf)) {
                 T obj = classOf.newInstance();
                 instance.singletonHolder.put(classOf, obj);
             }
-            return (T)instance.singletonHolder.get(classOf);
+            return (T) instance.singletonHolder.get(classOf);
         }
     }
 
@@ -54,61 +54,51 @@ public class DBModel<T> extends Model implements IBaseModel<DBModel>,Comparable<
     }
 
     @Override
-    public Date getUpdated()
-	{
+    public Date getUpdated() {
         return this.updated_at;
     }
 
     @Override
-    public DBModel findOne(Long mId)
-	{
+    public DBModel findOne(Long mId) {
         return load(getClass(), mId);
     }
 
     @Override
-    public List<? extends DBModel> findAll()
-	{
+    public List<? extends DBModel> findAll() {
         return selectQuery().from(getClass()).execute();
     }
 
     @Override
-    public void deleteOne(Long mId)
-	{
+    public void deleteOne(Long mId) {
         deleteQuery().from(getClass()).where("Id = ?", mId).execute();
     }
 
     @Override
-    public void deleteAll()
-	{
+    public void deleteAll() {
         deleteQuery().from(getClass()).execute();
     }
 
     @Override
-    public int compareTo(T another)
-	{
+    public int compareTo(T another) {
         return this.compareTo(another);
     }
 
     @Override
-    public String toString()
-	{
+    public String toString() {
         return super.toString();
     }
 
     @Override
-    public Select selectQuery()
-	{
+    public Select selectQuery() {
         return new Select();
     }
 
     @Override
-    public Delete deleteQuery()
-	{
+    public Delete deleteQuery() {
         return new Delete();
     }
 
-    public T clone() throws CloneNotSupportedException
-	{
+    public T clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
 }

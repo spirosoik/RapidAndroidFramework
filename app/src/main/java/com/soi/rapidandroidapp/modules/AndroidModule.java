@@ -26,53 +26,44 @@ import dagger.Provides;
  * Module for all Android related provisions
  */
 @Module
-(
-        complete = false,
-        library = true
-)
+        (
+                complete = false,
+                library = true
+        )
 public class AndroidModule {
 
     @Provides
     @Singleton
-    Context provideAppContext()
-    {
+    Context provideAppContext() {
         return BaseApplication.getInstance().getApplicationContext();
     }
 
     @Provides
-    SharedPreferences provideDefaultSharedPreferences(final Context context)
-    {
+    SharedPreferences provideDefaultSharedPreferences(final Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Provides
-    PackageInfo providePackageInfo(Context context)
-    {
-        try
-        {
+    PackageInfo providePackageInfo(Context context) {
+        try {
             return context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
+        } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Provides
-    TelephonyManager provideTelephonyManager(Context context)
-    {
+    TelephonyManager provideTelephonyManager(Context context) {
         return getSystemService(context, Context.TELEPHONY_SERVICE);
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T getSystemService(Context context, String serviceConstant)
-    {
+    public <T> T getSystemService(Context context, String serviceConstant) {
         return (T) context.getSystemService(serviceConstant);
     }
 
     @Provides
-    InputMethodManager provideInputMethodManager(final Context context)
-    {
+    InputMethodManager provideInputMethodManager(final Context context) {
         return (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 

@@ -2,7 +2,6 @@ package com.soi.rapidandroidapp.models;
 
 import android.test.InstrumentationTestCase;
 
-
 import com.soi.rapidandroidapp.models.common.DBModel;
 
 import org.junit.Test;
@@ -29,23 +28,21 @@ public class UserModelTest extends InstrumentationTestCase {
         Random randomizer = new Random();
         user = new User();
         user.userId = randomizer.nextLong();
-        user.authToken = String.valueOf(new Date().getTime())+"_token";
-        user.avatar = String.valueOf(new Date().getTime()) +".jpg";
-        user.email = new Date().getTime()+"@test.com";
+        user.authToken = String.valueOf(new Date().getTime()) + "_token";
+        user.avatar = String.valueOf(new Date().getTime()) + ".jpg";
+        user.email = new Date().getTime() + "@test.com";
         user.lname = String.valueOf(randomizer.nextLong());
         user.fname = String.valueOf(randomizer.nextLong());
     }
 
-	@Test
-    public void testSave()
-    {
+    @Test
+    public void testSave() {
         user.save();
         assertNotNull(user.getId());
     }
 
-	@Test
-    public void testFindOne() throws IllegalAccessException, InstantiationException
-    {
+    @Test
+    public void testFindOne() throws IllegalAccessException, InstantiationException {
         user.save();
         assertNotNull(user.getId());
 
@@ -53,9 +50,8 @@ public class UserModelTest extends InstrumentationTestCase {
         assertEquals(user.getId(), searchUser.getId());
     }
 
-	@Test
-    public void testFindAll() throws IllegalAccessException, InstantiationException
-    {
+    @Test
+    public void testFindAll() throws IllegalAccessException, InstantiationException {
         user.save();
         assertNotNull(user.getId());
 
@@ -65,9 +61,8 @@ public class UserModelTest extends InstrumentationTestCase {
         }
     }
 
-	@Test
-    public void testDeleteOne() throws IllegalAccessException, InstantiationException
-    {
+    @Test
+    public void testDeleteOne() throws IllegalAccessException, InstantiationException {
         user.save();
         assertNotNull(user.getId());
 
@@ -78,9 +73,8 @@ public class UserModelTest extends InstrumentationTestCase {
         assertNull(searchUser);
     }
 
-	@Test
-    public void testDeleteAll() throws IllegalAccessException, InstantiationException
-    {
+    @Test
+    public void testDeleteAll() throws IllegalAccessException, InstantiationException {
         user.save();
         assertNotNull(user.getId());
 
