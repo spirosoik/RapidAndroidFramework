@@ -22,6 +22,7 @@ public class SessionManager {
     public static final String KEY_FB_TOKEN = "fbToken";
     public static final String KEY_FIRST_TIME = "firstTime";
     public static final String KEY_USER_FB_EMAIL = "mail";
+    public static final String KEY_USER_CURRENT_LOCATION = "currentLocation";
     private static final String PREF_NAME = "RapidAndroidAppPref";
     // All shared preferences key
     private static final String IS_LOGIN = "IsLoggedIn";
@@ -125,5 +126,24 @@ public class SessionManager {
      */
     public boolean isLoggedIn() {
         return _pref.getBoolean(IS_LOGIN, false);
+    }
+
+    /**
+     * Sets the current location of a user 
+     * @param latlng
+     * @return
+     */
+    public boolean setCurrentLocation(String latlng)
+    {
+        return _editor.putString(KEY_USER_CURRENT_LOCATION, latlng).commit();
+    }
+
+    /**
+     * Returns the saved current location
+     * @return
+     */
+    public String getCurrentLocation()
+    {
+        return _pref.getString(KEY_USER_CURRENT_LOCATION,null);
     }
 }

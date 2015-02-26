@@ -9,4 +9,8 @@
     <string name="txt_connection_wifi">WIFI</string>
     <string name="dialog_button_txt_cancel"> Cancel </string>
 
+    <!-- API Errors -->
+    <string name="txt_unauthorized_error">Your email or your password was wrong</string>
+    <string name="txt_notfound_error">No results found</string>
+    <string name="txt_server_error">An error occurred</string>
 </resources>
