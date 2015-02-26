@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
 {
     private Context ctx;
     private String[] navigationItems;
+    private String[] navigationItemsSubtitle;
+    private Integer[] navigationItemIcons;
     private OnNavItemClickListener mListener;
 
     /**
@@ -30,20 +33,26 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         public void onNavigationClick(View view, int position);
     }
 
-    public NavigationDrawerAdapter(String[] navigationItems, Context ctx) {
-        this.navigationItems = navigationItems;
+    public NavigationDrawerAdapter(Context ctx, String[] navigationItems,
+                                   String[] navigationItemsSubtitle, Integer[] navigationItemIcons) {
         this.ctx = ctx;
+        this.navigationItems = navigationItems;
+        this.navigationItemsSubtitle = navigationItemsSubtitle;
+        this.navigationItemIcons = navigationItemIcons;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         View root;
 
-        @InjectView(R.id.navigationContainer)
-        LinearLayout navigationContainer;
+        @InjectView(R.id.txtMenuTitle)
+        TextView txtMenuTitle;
 
-        @InjectView(R.id.navigationItem)
-        TextView navigationItem;
+        @InjectView(R.id.txtMenuSubtitle)
+        TextView txtMenuSubtitle;
+
+        @InjectView(R.id.imgIcon)
+        ImageView imgIcon;
 
         public ViewHolder(View v) {
             super(v);
@@ -55,7 +64,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     }
 
     @Override
-    public NavigationDrawerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_list_item, parent, false);
         return new ViewHolder(view);
@@ -64,7 +73,9 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         if (navigationItems != null && navigationItems.length > 0) {
-            viewHolder.navigationItem.setText(navigationItems[position]);
+            viewHolder.txtMenuTitle.setText(navigationItems[position]);
+            viewHolder.txtMenuSubtitle.setText(navigationItemsSubtitle[position]);
+            viewHolder.imgIcon.setImageDrawable(ctx.getResources().getDrawable(navigationItemIcons[position]));
         }
     }
 

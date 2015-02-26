@@ -11,9 +11,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.soi.rapidandroidapp.R;
 
@@ -187,5 +190,14 @@ public class DialogsHelper {
             }
         });
         waitingDialog.setCancelable(false);
+    }
+
+    /**
+     * Show a toast message
+     * @param c
+     * @param text
+     */
+    public void toastMakeAndShow(Context c ,String text, int duration) {
+        Toast.makeText(c, text, duration).show();
     }
 }
