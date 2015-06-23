@@ -1,0 +1,19 @@
+dependencies:
+  pre:
+    - sudo chmod +x gradlew
+    - sudo chmod +x scripts/run-circleci.sh
+test:
+  override:
+    - ./gradlew clean assemble -PdisablePreDex
+    # start the emulator
+    - emulator -avd circleci-android22 -no-audio -no-window:
+        background: true
+        parallel: true
+    # wait for it to have booted
+    - circle-android wait-for-boot
+    # run tests against the emulator.
+    - ./scripts/run-circleci.sh
+    # copy the build outputs to artifacts
+    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+    # copy the test results to the test results directory.
+    - cp -r app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS

@@ -41,7 +41,7 @@ public class FoursquareApiManager extends AbstractApiManager<FoursquareApiServic
     }
 
     @Override
-    protected String getApiUrl() {
+    public String getApiUrl() {
         return Constants.FOURSQUARE_API_URL;
     }
 

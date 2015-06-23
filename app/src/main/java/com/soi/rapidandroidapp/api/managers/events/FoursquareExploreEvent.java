@@ -14,4 +14,12 @@ public class FoursquareExploreEvent extends BaseEvent {
         super(response);
         this.response = response;
     }
+
+    public Explore getResponse() {
+        return response;
+    }
+
+    public void setResponse(Explore response) {
+        this.response = response;
+    }
 }

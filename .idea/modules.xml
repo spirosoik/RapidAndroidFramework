@@ -4,10 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RapidAndroidApp.iml" filepath="$PROJECT_DIR$/RapidAndroidApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/facebook-android-sdk/facebook/facebook.iml" filepath="$PROJECT_DIR$/libraries/facebook-android-sdk/facebook/facebook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/facebook-android-sdk/facebook-android-sdk.iml" filepath="$PROJECT_DIR$/libraries/facebook-android-sdk/facebook-android-sdk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />
     </modules>
   </component>
 </project>
-

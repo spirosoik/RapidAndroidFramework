@@ -10,11 +10,11 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.internal.widget.ViewUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -23,6 +23,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -31,6 +34,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.soi.rapidandroidapp.BaseApplication;
+import com.soi.rapidandroidapp.BuildConfig;
 import com.soi.rapidandroidapp.R;
 import com.soi.rapidandroidapp.api.managers.events.common.HttpNotfoundEvent;
 import com.soi.rapidandroidapp.api.managers.events.common.HttpServerErrorEvent;
@@ -41,14 +45,18 @@ import com.soi.rapidandroidapp.events.common.BusProvider;
 import com.soi.rapidandroidapp.managers.AnalyticsManager;
 import com.soi.rapidandroidapp.managers.EnvironmentManager;
 import com.soi.rapidandroidapp.managers.SessionManager;
+import com.soi.rapidandroidapp.models.common.Environment;
 import com.soi.rapidandroidapp.modules.Injector;
 import com.soi.rapidandroidapp.ui.adapters.NavigationDrawerAdapter;
+import com.soi.rapidandroidapp.ui.dialog.AlertDialogFragment;
 import com.soi.rapidandroidapp.ui.dialog.ErrorDialogFragment;
 import com.soi.rapidandroidapp.utilities.DialogsHelper;
 import com.soi.rapidandroidapp.utilities.StringUtils;
 import com.soi.rapidandroidapp.utilities.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+
+import org.apache.http.entity.StringEntity;
 
 import java.util.HashMap;
 
@@ -72,13 +80,24 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
 
     @Optional
     @InjectView(R.id.left_drawer)
-    protected RecyclerView drawerList;
+    protected RelativeLayout drawerList;
+
+    @Optional
+    @InjectView(R.id.listMenu)
+    protected RecyclerView listMenu;
+
+    @Optional
+    @InjectView(R.id.txtVersion)
+    protected TextView txtVersion;
 
     protected ActionBarDrawerToggle actionBarDrawerToggle;
 
     protected int fullBackground;
 
     //Configuration
+    @Inject
+    protected Bus mBus;
+
     @Inject
     protected EnvironmentManager environmentManager;
 
@@ -122,6 +141,11 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
     protected boolean usePlayServices = true;
 
     /**
+     *
+     */
+    protected boolean useScrollFragmentContainer = false;
+
+    /**
      * Google api client for play services
      */
     protected GoogleApiClient mGoogleApiClient;
@@ -130,6 +154,8 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
      * Last geolocation
      */
     protected Location mLastLocation;
+
+    protected boolean mUpdatesRequested = false;
 
     /**
      * Current geolocation latitude,longitude
@@ -194,6 +220,11 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
      */
     protected abstract void selectItem(int position);
 
+    /**
+     *
+     */
+    protected FragmentManager fragmentManager;
+
     private GestureDetector mGestureDetector;
 
     @Override
@@ -201,10 +232,23 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
     {
         super.onCreate(savedInstanceState);
 
+        Injector.inject(this);
+
         if (hasNavigationDrawer) {
             setContentView(R.layout.activity_navigation_drawer);
-        } else if (containsFragment) {
+            switch (environmentManager.getEnvironment()) {
+                case STAGING:
+                    txtVersion.setText(String.format("v%s(%d)-%s",BuildConfig.VERSION_NAME,
+                            BuildConfig.VERSION_CODE, Environment.STAGING.name()));
+                    break;
+                case LIVE:
+                    txtVersion.setText("v"+ BuildConfig.VERSION_NAME + "("+BuildConfig.VERSION_CODE+")");
+                    break;
+            }
+        } else if (containsFragment && !useScrollFragmentContainer) {
             setContentView(R.layout.activity_fragment);
+        } else if (containsFragment)  {
+            setContentView(R.layout.activity_scroll_fragment);
         } else {
             setContentView(customLayout);
         }
@@ -215,7 +259,6 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
 
         initActionBar();
 
-        Injector.inject(this);
         apiErrorHandler = new ApiErrorHandler();
 
         // Enable google api client
@@ -232,6 +275,8 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
             if (SCREEN_NAME != null)
                 AnalyticsManager.getInstance().trackScreenView(SCREEN_NAME);
         }
+
+        fragmentManager = getSupportFragmentManager();
     }
 
     @Override
@@ -258,7 +303,7 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
     protected void onResume()
     {
         super.onResume();
-        BusProvider.getInstance().register(this);
+        mBus.register(this);
         apiErrorBus.register(apiErrorHandler);
 
         if (usePlayServices && mGoogleApiClient.isConnected()) {
@@ -270,7 +315,7 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
     protected void onPause()
     {
         super.onPause();
-        BusProvider.getInstance().unregister(this);
+        mBus.unregister(this);
         apiErrorBus.unregister(apiErrorHandler);
 
         if (usePlayServices) {
@@ -369,10 +414,10 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
                                         int icDrawer, int sOpen, int sClose)
     {
         if (drawerLayout != null) {
-            drawerList.setHasFixedSize(true);
+            listMenu.setHasFixedSize(true);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-            drawerList.setLayoutManager(layoutManager);
-            drawerList.setAdapter(new NavigationDrawerAdapter(this, items, subtitles, icons));
+            listMenu.setLayoutManager(layoutManager);
+            listMenu.setAdapter(new NavigationDrawerAdapter(this, items, subtitles, icons));
 
             mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
 
@@ -381,7 +426,7 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
                 }
 
             });
-            drawerList.addOnItemTouchListener(new NavigationItemClickListener());
+            listMenu.addOnItemTouchListener(new NavigationItemClickListener());
             actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, icDrawer, sOpen, sClose) {
                 public void onDrawerClosed(View view) {
                     getSupportActionBar().setTitle(actionBarTitle);
@@ -406,6 +451,9 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
             if(child!=null && mGestureDetector.onTouchEvent(motionEvent)){
                 drawerLayout.closeDrawers();
                 selectItem(recyclerView.getChildPosition(child));
+                if (drawerLayout != null && drawerLayout.isDrawerOpen(drawerList)) {
+                    drawerLayout.closeDrawers();
+                }
                 return true;
             }
             return false;
@@ -416,17 +464,23 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
         }
     }
 
-    protected void createFragment(Fragment targetFragment, boolean mustAddToBackStack)
+    protected void createFragment(Fragment targetFragment, String fragmentName,
+                                  boolean mustAddToBackStack, boolean mustPopBackImemediate)
     {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (fragmentManager != null) {
+            if (mustPopBackImemediate) {
+                fragmentManager.popBackStackImmediate();
+            }
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        if (mustAddToBackStack) {
-            transaction.addToBackStack(null);
+            targetFragment.setRetainInstance(true);
+            transaction.replace(R.id.fragmentContainer, targetFragment, fragmentName)
+                    .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            if (mustAddToBackStack) {
+                transaction.addToBackStack(null);
+            }
+            transaction.commit();
         }
-        targetFragment.setRetainInstance(true);
-        transaction.replace(R.id.fragmentContainer, targetFragment)
-                .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
     }
 
     /**
@@ -508,7 +562,7 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
     @Override
     public void onLocationChanged(Location location) {
         if (usePlayServices)
-            mCurrentLocation = location;
+            mLastLocation = location;
     }
 
     @Override
@@ -570,7 +624,7 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
      * Creates a dialog for an error message
      * @param errorCode
      */
-    private void showErrorDialog(int errorCode) {
+    protected void showErrorDialog(int errorCode) {
         HashMap<String, Object> data = new HashMap<String, Object>();
         data.put(ErrorDialogFragment.KEY_DIALOG_ERROR, errorCode);
         data.put(ErrorDialogFragment.KEY_REQUEST_RESOLVE_ERROR, REQUEST_RESOLVE_ERROR);
@@ -580,6 +634,23 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
         args.putInt(DIALOG_ERROR, errorCode);
         dialogFragment.setArguments(args);
         dialogFragment.show(getSupportFragmentManager(), "errordialog");
+    }
+
+    /**
+     * Handle error
+     * @param text
+     */
+    protected void handleError(String text) {
+        AlertDialogFragment.newInstance("Error", text, false).show(getSupportFragmentManager(), null);
+    }
+
+    /**
+     * Handle success messages
+     * @param title
+     * @param message
+     */
+    protected void handleSuccess(String title, String message) {
+        AlertDialogFragment.newInstance(title, message,false).show(getSupportFragmentManager(), null);
     }
 
     private class ApiErrorHandler {
@@ -619,7 +690,7 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
 
         @Subscribe
         public void onNoInternetEvent(NotInternetEvent event) {
-            dialogsHelper.toastMakeAndShow(AbstractFragmentActivity.this, "No internet connection", Toast.LENGTH_LONG);
+            dialogsHelper.toastMakeAndShow(AbstractFragmentActivity.this, "No internet connection", Toast.LENGTH_SHORT);
         }
     }
 }

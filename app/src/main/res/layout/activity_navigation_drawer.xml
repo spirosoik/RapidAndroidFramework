@@ -5,18 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
-        android:id="@+id/main_fragment"
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout
         android:id="@+id/left_drawer"
-        android:background="@color/icons"
-        android:scrollbars="vertical"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@color/list_divider"
-        android:dividerHeight="1dp"/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:textSize="12sp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listMenu"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:divider="@color/list_divider"
+            android:dividerHeight="1dp"/>
+    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>
