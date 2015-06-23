@@ -6,7 +6,7 @@
     <title>Rapidandroidapp by spirosoik</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,7 +29,13 @@
       </header>
       <section>
         <h1>
-<a id="rad-android-app" class="anchor" href="#rad-android-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>RAD Android App</h1>
+<a id="rapid-android-development-template" class="anchor" href="#rapid-android-development-template" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rapid Android Development Template</h1>
+
+<ul>
+<li>
+<strong>master:</strong> <a href="https://circleci.com/gh/spirosoik/RapidAndroidApp/tree/master"><img src="https://circleci.com/gh/spirosoik/RapidAndroidApp/tree/master.svg?style=shield&amp;circle-token=7cefb05d9be631244a292f24a1eb2da96660a21d" alt="Build Status"></a>
+</li>
+</ul>
 
 <h2>
 <a id="tools" class="anchor" href="#tools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tools</h2>
@@ -49,24 +55,51 @@
 
 <ul>
 <li><a href="https://github.com/pardom/ActiveAndroid">Active Android 3.1.10</a></li>
-<li><a href="http://square.github.io/retrofit/">Retrofit 1.7.0</a></li>
-<li><a href="http://square.github.io/okhttp/">OkHttp 2.0.0</a></li>
-<li><a href="http://square.github.io/otto/">Otto Eventbus 1.3.5</a></li>
+<li><a href="http://square.github.io/retrofit/">Retrofit 1.9.0</a></li>
+<li><a href="http://square.github.io/okhttp/">OkHttp 2.4.0</a></li>
+<li><a href="http://square.github.io/otto/">Otto Eventbus 1.3.8</a></li>
 <li><a href="http://square.github.io/dagger/">Dagger 1.2.2</a></li>
-<li><a href="https://github.com/JakeWharton/butterknife">ButterKnife 5.1.2</a></li>
-<li><a href="http://square.github.io/picasso/">Otto Picasso 2.3.2</a></li>
+<li><a href="https://github.com/JakeWharton/butterknife">ButterKnife 6.1.0</a></li>
+<li><a href="http://square.github.io/picasso/">Otto Picasso 2.5.2</a></li>
 <li><a href="https://github.com/ragunathjawahar/android-saripaar">UI validation library Saripaar</a></li>
 </ul>
 
 <h2>
-<a id="3rd-parties-social" class="anchor" href="#3rd-parties-social" aria-hidden="true"><span class="octicon octicon-link"></span></a>3rd Parties Social</h2>
+<a id="3rd-parties-social-as-gradle-imports" class="anchor" href="#3rd-parties-social-as-gradle-imports" aria-hidden="true"><span class="octicon octicon-link"></span></a>3rd Parties Social (as gradle imports)</h2>
 
 <ul>
-<li>Facebook SDK as a git module</li>
+<li>Facebook SDK</li>
+<li>Twitter SDK by Fabric</li>
+<li>Crashlytics SDK by Fabric</li>
+</ul>
+
+<p>Note: You can change the keys into <code>api_keys.xml</code>. For Crashlytics you can change it into <code>AndroidManifest.xml</code>. There is a <code>SocialManager</code> class
+to use for social actions.</p>
+
+<h2>
+<a id="check-the-documentation" class="anchor" href="#check-the-documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Check the documentation</h2>
+
+<ul>
+<li><a href="https://github.com/spirosoik/RapidAndroidApp/wiki">Wiki</a></li>
 </ul>
 
 <h2>
-<a id="implemented" class="anchor" href="#implemented" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implemented</h2>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h2>
+
+<ul>
+<li>Robolectric for unit testing</li>
+<li>JaCoCo coverage testing</li>
+<li>Shell scripts to run tests fast. Check <code>scripts</code> folder.</li>
+<li>CircleCI continuous integration server</li>
+<li>Calabash (SOON)</li>
+</ul>
+
+<h2>
+<a id="proguard" class="anchor" href="#proguard" aria-hidden="true"><span class="octicon octicon-link"></span></a>Proguard</h2>
+
+<ul>
+<li>Proguard enable for <code>LIVE</code>, <code>UAT</code> environments to minify the build</li>
+</ul>
 
 <h3>
 <a id="gradle" class="anchor" href="#gradle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gradle</h3>
@@ -79,20 +112,14 @@
 <a id="environment-manager" class="anchor" href="#environment-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>Environment Manager</h3>
 
 <ul>
-<li>Multi-environment support (<code>LIVE</code>, <code>STAGING</code>, <code>UAT</code>)</li>
-<li>Decides the environment for the current build</li>
-<li>Decides the app's base API URL for the current build</li>
-<li>Decides the app's API logging level for the current build</li>
-</ul>
-
-<h3>
-<a id="sqlite-database" class="anchor" href="#sqlite-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>SQLite Database</h3>
-
-<ul>
-<li>
-<code>DBModel</code> class to extend for each Object/Model you want to have access in database.</li>
-<li>Public methods for SQL operations (<code>findOne(Long id)</code>, <code>findAll()</code>, <code>deleteOne(Long id)</code> ,<code>deleteAll</code>)</li>
-<li>Quick Methods for a new <code>Select</code> and <code>Delete</code> Query</li>
+<li>Multi-environment support (<code>LIVE</code>, <code>UAT</code>, <code>STAGING</code>)</li>
+<li>Assigns dynamically environment for the current build</li>
+<li>Assigns dynamically the API URL for the current build</li>
+<li>Assigns dynamically the API logging level for the current build</li>
+<li>Assigns dynamically the logging level for the current build</li>
+<li>Decides if the app according to the environment can track in analytics</li>
+<li>Decides if the app according to the environment can receive notifications</li>
+<li>Decides if the app according to the environment can track bugs in crashlytics</li>
 </ul>
 
 <h3>
@@ -104,7 +131,7 @@
 <code>AbstractApiManager</code> with Retrofit based on the Environment manager API URL</li>
 <li>
 <code>FULL/NONE</code> logging for API based on the Environment manager <code>LOGLEVEL</code> of API</li>
-<li>AbstractAsyncTask which produces events</li>
+<li>AbstractAsyncTask which produces events in a public BUS</li>
 <li>Event Base architecture with Otto for each response after an <code>AbstractAsyncTask</code>
 </li>
 <li>Access to API methods via Reflection. The only thing you must set up is the <code>ApiRequestAttrs</code>. Example in wiki</li>
@@ -114,10 +141,23 @@
 <a id="activities" class="anchor" href="#activities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Activities</h3>
 
 <ul>
-<li>ButterKnife injection to use this -&gt; <code>@InjectView(R.id.btnTest)</code> to minimize and remove the old <code>(Button) findViewById(R.id.btnTest)</code>
+<li>Dagger for dependency injection</li>
+<li>ButterKnife views injection to use this -&gt; <code>@InjectView(R.id.btnTest)</code> to minimize and remove the old <code>(Button) findViewById(R.id.btnTest)</code>
 </li>
 <li>Each Activity/FragmentActivity registered to listen the Event BUS</li>
 <li>Customizable/Overridable action bar for each Activity/FragmentActivity</li>
+<li>
+<code>AbstractFragmentActivity</code> to extended by each Fragment activity and it can contains the fragment you want. You must implement only the createFragment method</li>
+<li>
+<code>BaseFragment</code> to be extended by each fragment as generic fragment</li>
+</ul>
+
+<h3>
+<a id="google-analytics" class="anchor" href="#google-analytics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google Analytics</h3>
+
+<ul>
+<li>Support for google analytics track events and pageviews. Use <code>AnalyticsManager</code>
+</li>
 </ul>
       </section>
       <footer>
