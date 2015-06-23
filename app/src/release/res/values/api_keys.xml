@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fb_application_id"></string>
+    <string name="fb_namespace"></string>
+    <string name="crashlytics_key">1f22812da16ce068a0369d078ed2829f224738e2</string>
+    <string name="twitter_consumer_key"></string>
+    <string name="twitter_consumer_secret"></string>
 </resources>

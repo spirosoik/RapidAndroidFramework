@@ -1,13 +1,15 @@
 package com.soi.rapidandroidapp.ui.common;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.widget.ViewUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -38,9 +40,17 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     @Inject
     protected Utils utils;
-    
+
     @Inject
     protected DialogsHelper dialogsHelper;
+
+    /**
+     * Waiting dialog to show before go to next screen
+     */
+    private Dialog waitingDialog;
+
+    @Inject
+    Bus mBus;
 
     // Obtain same Singleton eventBus
     private Bus apiErrorBus = BusProvider.getInstance();
@@ -51,7 +61,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * The current action bar of the screen if it's
      * exist
      */
-    protected android.support.v7.app.ActionBar actionBar;
+    protected ActionBar actionBar;
 
     /**
      * The title of the actionbar if it's exist
@@ -86,7 +96,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
     protected void onResume()
     {
         super.onResume();
-        BusProvider.getInstance().register(this);
+        mBus.register(this);
         apiErrorBus.register(apiErrorHandler);
     }
 
@@ -94,7 +104,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
     protected void onPause()
     {
         super.onPause();
-        BusProvider.getInstance().unregister(this);
+        mBus.unregister(this);
         apiErrorBus.unregister(apiErrorHandler);
     }
 
@@ -146,6 +156,25 @@ public abstract class AbstractActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Just shows a waiting dialog
+     * @param title
+     * @param text
+     */
+    protected void showWaitingDialog(String title, String text)
+    {
+        waitingDialog = dialogsHelper.getCustomDialog(this, title, text);
+        waitingDialog.show();
+    }
+
+    /**
+     * Just dismisses a waiting dialog
+     */
+    protected void dismissWaitingDialog()
+    {
+        if (waitingDialog != null && waitingDialog.isShowing())
+            waitingDialog.dismiss();
+    }
 
     private class ApiErrorHandler {
         // API ERROR HANDLING
@@ -179,7 +208,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
         }
         @Subscribe
         public void onNoInternetEvent(NotInternetEvent event) {
-            dialogsHelper.toastMakeAndShow(AbstractActivity.this, "No internet connection", Toast.LENGTH_LONG);
+            dialogsHelper.toastMakeAndShow(AbstractActivity.this, "No internet connection", Toast.LENGTH_SHORT);
         }
     }
 }

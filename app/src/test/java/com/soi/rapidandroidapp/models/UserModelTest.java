@@ -3,27 +3,30 @@ package com.soi.rapidandroidapp.models;
 import android.test.InstrumentationTestCase;
 
 import com.soi.rapidandroidapp.models.common.DBModel;
+import com.soi.rapidandroidapp.test.support.UnitTestSpecification;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+
 /**
  * Created by Spiros I. Oikonomakis on 11/14/14.
  */
-@RunWith(RobolectricTestRunner.class)
-public class UserModelTest extends InstrumentationTestCase {
+@Config(emulateSdk = 18)
+public class UserModelTest extends UnitTestSpecification {
 
     private User user;
 
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
 
         Random randomizer = new Random();
         user = new User();
@@ -38,49 +41,49 @@ public class UserModelTest extends InstrumentationTestCase {
     @Test
     public void testSave() {
         user.save();
-        assertNotNull(user.getId());
+        assertThat(user.getId()).isNotNull();
     }
 
     @Test
     public void testFindOne() throws IllegalAccessException, InstantiationException {
         user.save();
-        assertNotNull(user.getId());
+        assertThat(user.getId()).isNotNull();
 
         User searchUser = (User) DBModel.getInstance(User.class).findOne(user.getId());
-        assertEquals(user.getId(), searchUser.getId());
+        assertThat(user.getId()).isEqualTo(searchUser.getId());
     }
 
     @Test
     public void testFindAll() throws IllegalAccessException, InstantiationException {
         user.save();
-        assertNotNull(user.getId());
+        assertThat(user.getId()).isNotNull();
 
         List<User> users = (List<User>) DBModel.getInstance(User.class).findAll();
         for (DBModel model : users) {
-            assertNotNull(model);
+            assertThat(model).isNotNull();
         }
     }
 
     @Test
     public void testDeleteOne() throws IllegalAccessException, InstantiationException {
         user.save();
-        assertNotNull(user.getId());
+        assertThat(user.getId()).isNotNull();
 
         Long userId = user.getId();
         DBModel.getInstance(User.class).deleteOne(user.getId());
 
         User searchUser = (User) DBModel.getInstance(User.class).findOne(userId);
-        assertNull(searchUser);
+        assertThat(searchUser).isNull();
     }
 
     @Test
     public void testDeleteAll() throws IllegalAccessException, InstantiationException {
         user.save();
-        assertNotNull(user.getId());
+        assertThat(user.getId()).isNotNull();
 
         DBModel.getInstance(User.class).deleteAll();
 
         List<User> userList = (List<User>) DBModel.getInstance(User.class).findAll();
-        assertEquals(0, userList.size());
+        assertThat(0).isEqualTo(userList.size());
     }
 }

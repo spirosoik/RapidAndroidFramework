@@ -43,7 +43,7 @@ public class ApiManager extends AbstractApiManager<AppApiService> {
 
 
     @Override
-    protected String getApiUrl()
+    public String getApiUrl()
     {
         return environmentManager.getEnviromentApiUrl();
     }

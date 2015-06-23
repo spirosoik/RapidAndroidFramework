@@ -7,8 +7,9 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
-        classpath 'org.robolectric:robolectric-gradle-plugin:0.13.+'
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+        classpath 'org.robolectric:robolectric-gradle-plugin:1.1.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -22,3 +23,31 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 }
+
+//Controlling Android Properties of all your modules for the main project
+ext {
+    compileSdkVersion = 22
+    buildToolsVersion = "22.0.1"
+}
+
+//Improving Build Server performance
+project.ext.preDexLibs = !project.hasProperty('disablePreDex')
+
+subprojects {
+    project.plugins.whenPluginAdded { plugin ->
+        if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
+            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+        } else if ("com.android.build.gradle.LibraryPlugin".equals(plugin.class.name)) {
+            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+        }
+    }
+}
+apply plugin: 'java' // ensure clean is also triggered for root build folder
+apply plugin: 'build-dashboard'
+
+buildDashboard {
+    reports.html.destination = "build/"
+}
+
+test.reports.html.enabled = false     // just clean up dashboard from not generated reports
+test.reports.junitXml.enabled = false // just clean up dashboard from not generated reports

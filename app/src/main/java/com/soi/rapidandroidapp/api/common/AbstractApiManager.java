@@ -26,19 +26,19 @@ import retrofit.converter.GsonConverter;
 public abstract class AbstractApiManager<T> extends AbstractAsyncTask implements BaseApiManager<T> {
 
     protected static final String TAG_LOG_NAME = Class.class.getSimpleName();
-    
-    public T service;
-    
+
+    protected T service;
+
     @Inject
     EnvironmentManager environmentManager;
-    
+
     private GsonInstance gsonInstance = new GsonInstance();
 
     /**
-     * Get current url for the requested api manager 
+     * Get current url for the requested api manager
      * @return
      */
-    protected abstract String getApiUrl();
+    public abstract String getApiUrl();
 
     /**
      * Returns the custom header which will be intercept in each request from
@@ -47,19 +47,20 @@ public abstract class AbstractApiManager<T> extends AbstractAsyncTask implements
      */
     protected abstract Map<String, String> getHeaders();
 
-    protected AbstractApiManager() 
+    protected AbstractApiManager()
     {
         Injector.inject(this);
     }
 
     @Override
-    public RestAdapter.Builder getDefaultRestAdapterBuilder() {
+    public RestAdapter.Builder getDefaultRestAdapterBuilder()
+    {
         OkHttpClient httpClient = new OkHttpClient();
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(getApiUrl())
                 .setErrorHandler(new ApiErrorHandler(BusProvider.getInstance()))
-                .setClient(new OkClient(new OkHttpClient()))
+                .setClient(new OkClient(httpClient))
                 .setConverter(new GsonConverter(GsonInstance.gson))
                 .setLogLevel(environmentManager.getEnvironmentApiLogLevel())
                 .setLog(new RestAdapter.Log() { //
@@ -72,17 +73,20 @@ public abstract class AbstractApiManager<T> extends AbstractAsyncTask implements
     }
 
     @Override
-    public T getApiService() {
+    public T getApiService()
+    {
         return this.service;
     }
 
     @Override
-    public void setApiService(T service) {
+    public void setApiService(T service)
+    {
         this.service = service;
     }
 
     @Override
-    public Object execute(Object target, String methodName, Object... args) {
+    public Object execute(Object target, String methodName, Object... args)
+    {
         return ReflectionUtils.tryInvoke(target, methodName, args);
     }
 }
