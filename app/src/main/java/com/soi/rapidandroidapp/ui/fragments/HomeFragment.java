@@ -70,6 +70,18 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     @Override
+    public boolean allowBackPressed()
+    {
+        return true;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        getActivity().finish();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
