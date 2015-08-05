@@ -4,7 +4,7 @@ Rapid Android Development Template
 * **master:** [![Build Status](https://circleci.com/gh/spirosoik/RapidAndroidFramework/tree/master.svg?style=shield&circle-token=7cefb05d9be631244a292f24a1eb2da96660a21d)](https://circleci.com/gh/spirosoik/RapidAndroidApp/tree/master)
 
 ## Tools
-Android Studio 0.8.x and Gradle 2.x
+Android Studio 1.x and Gradle 2.x
 
 ## IDE Tools
 * [Dagger Plugin] (https://github.com/square/dagger-intellij-plugin)
