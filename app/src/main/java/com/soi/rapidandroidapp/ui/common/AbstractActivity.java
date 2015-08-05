@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.internal.widget.ViewUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public abstract class AbstractActivity extends ActionBarActivity {
+public abstract class AbstractActivity extends AppCompatActivity {
 
     @Inject
     protected EnvironmentManager environmentManager;

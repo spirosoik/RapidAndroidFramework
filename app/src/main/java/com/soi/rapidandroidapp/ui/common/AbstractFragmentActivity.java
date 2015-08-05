@@ -8,13 +8,13 @@ import android.content.IntentSender;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,7 +65,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
 
-public abstract class AbstractFragmentActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
+public abstract class AbstractFragmentActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     //Views
@@ -427,7 +426,7 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
 
             });
             listMenu.addOnItemTouchListener(new NavigationItemClickListener());
-            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, icDrawer, sOpen, sClose) {
+            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, sOpen, sClose) {
                 public void onDrawerClosed(View view) {
                     getSupportActionBar().setTitle(actionBarTitle);
                     invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -440,6 +439,7 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity impleme
                     actionBar.setTitle("Menu");
                 }
             };
+            actionBarDrawerToggle.setHomeAsUpIndicator(icDrawer);
             drawerLayout.setDrawerListener(actionBarDrawerToggle);
         }
     }
