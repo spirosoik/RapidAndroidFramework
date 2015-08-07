@@ -3,6 +3,8 @@ Rapid Android Development Template
 
 * **master:** [![Build Status](https://circleci.com/gh/spirosoik/RapidAndroidFramework/tree/master.svg?style=shield&circle-token=7cefb05d9be631244a292f24a1eb2da96660a21d)](https://circleci.com/gh/spirosoik/RapidAndroidApp/tree/master)
 
+supported by: (https://img.shields.io/badge/Android%20Arsenal-RapidAndroidFramework-green.svg?style=flat)](https://android-arsenal.com/details/1/2258)
+
 ## Tools
 Android Studio 1.x and Gradle 2.x
 
