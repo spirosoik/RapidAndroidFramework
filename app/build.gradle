@@ -33,6 +33,7 @@ android {
 
     dexOptions {
         jumboMode true
+        javaMaxHeapSize "4g"
     }
 
     compileSdkVersion rootProject.ext.compileSdkVersion
