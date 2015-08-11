@@ -1,3 +1,7 @@
+general:
+  branches:
+    only:
+      - master
 dependencies:
   pre:
     - sudo chmod +x gradlew
