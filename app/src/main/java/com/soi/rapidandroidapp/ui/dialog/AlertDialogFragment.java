@@ -13,7 +13,7 @@ public class AlertDialogFragment extends DialogFragment implements Dialog.OnClic
     private static final String PARAM_TITLE = "PARAM_TITLE";
     private static final String PARAM_MESSAGE = "PARAM_MESSAGE";
     private static final String PARAM_ACTION  = "PARAM_ACTION";
-    
+
     private boolean mForceClose;
 
     public static AlertDialogFragment newInstance(String title, String message, boolean forceClose) {
@@ -48,5 +48,13 @@ public class AlertDialogFragment extends DialogFragment implements Dialog.OnClic
         if (mForceClose) {
             getActivity().finish();
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        if (getDialog() == null ) {
+            setShowsDialog(false);
+        }
+        super.onActivityCreated(savedInstanceState);
     }
 }
