@@ -30,16 +30,12 @@ public class DialogsHelper {
      * Singleton pattern for static methods and variables
      * You must run the singletons which you will use in the first Activity
      */
-    public static void initInstance() {
+    public static DialogsHelper getInstance() {
         if (_instance == null) {
             _instance = new DialogsHelper();
         }
-    }
-
-    public static DialogsHelper getInstance() {
         return _instance;
     }
-
     /**
      * Close waiting dialog
      */
@@ -153,7 +149,7 @@ public class DialogsHelper {
 
         return dialog;
     }
-    
+
     /**
      * Shows a progress dialog when must run tasks,jobs for some time like an async event
      * WARNING!!! Must show the dialog in Android's runOnUiThread method of the current activity
