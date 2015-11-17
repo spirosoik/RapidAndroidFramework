@@ -1,6 +1,7 @@
 package com.soi.rapidandroidapp.models;
 
 import android.os.Build;
+import com.soi.rapidandroidapp.BuildConfig;
 import com.soi.rapidandroidapp.models.common.DBModel;
 import com.soi.rapidandroidapp.test.support.UnitTestSpecification;
 import java.util.Date;
@@ -15,7 +16,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 /**
  * Created by Spiros I. Oikonomakis on 11/14/14.
  */
-@Config(sdk = Build.VERSION_CODES.JELLY_BEAN)
+@Config(sdk = Build.VERSION_CODES.JELLY_BEAN, constants = BuildConfig.class)
 public class UserModelTest
     extends UnitTestSpecification {
 
@@ -54,6 +55,7 @@ public class UserModelTest
     user.save();
     assertThat(user.getId()).isNotNull();
 
+    @SuppressWarnings("unchecked")
     List<User> users = (List<User>) DBModel.getInstance(User.class).findAll();
     for (DBModel model : users) {
       assertThat(model).isNotNull();
@@ -79,6 +81,7 @@ public class UserModelTest
 
     DBModel.getInstance(User.class).deleteAll();
 
+    @SuppressWarnings("unchecked")
     List<User> userList = (List<User>) DBModel.getInstance(User.class).findAll();
     assertThat(0).isEqualTo(userList.size());
   }

@@ -1,6 +1,7 @@
 package com.soi.rapidandroidapp.api.managers;
 
 import android.os.Build;
+import com.soi.rapidandroidapp.BuildConfig;
 import com.soi.rapidandroidapp.TestBaseApplication;
 import com.soi.rapidandroidapp.api.managers.events.FoursquareExploreEvent;
 import com.soi.rapidandroidapp.api.managers.events.FoursquareSearchEvent;
@@ -28,7 +29,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
  * <p/>
  * This class handles all the api requests
  */
-@Config(sdk = Build.VERSION_CODES.JELLY_BEAN)
+@Config(sdk = Build.VERSION_CODES.JELLY_BEAN, constants = BuildConfig.class)
 public class FoursquareApiManagerTest
     extends UnitTestSpecification {
 
