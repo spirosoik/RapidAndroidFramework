@@ -1,245 +1,241 @@
 buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
+  repositories {
+    maven { url 'https://maven.fabric.io/public' }
+  }
 
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
+  dependencies {
+    classpath 'io.fabric.tools:gradle:1.+'
+  }
 }
 apply plugin: "jacoco"
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
-apply plugin: 'org.robolectric'
 
 repositories {
-    maven { url 'https://maven.fabric.io/public' }
+  maven { url 'https://maven.fabric.io/public' }
 }
 
 apply plugin: 'io.fabric'
 
 android {
 
-    packagingOptions {
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'LICENSE'
-        exclude 'NOTICE'
-        exclude 'asm-license.txt'
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+    exclude 'LICENSE.txt'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/LICENSE.txt'
+    exclude 'META-INF/NOTICE'
+    exclude 'LICENSE'
+    exclude 'NOTICE'
+    exclude 'asm-license.txt'
+  }
+
+  dexOptions {
+    jumboMode true
+    javaMaxHeapSize "4g"
+  }
+
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    applicationId "com.soi.rapidandroidapp"
+    minSdkVersion 14
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+    multiDexEnabled true
+    testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+  }
+
+  buildTypes {
+    release {
+      ext.enableCrashlytics = false
+      minifyEnabled true
+      buildConfigField "String", "ENVIRONMENT", "\"LIVE\""
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-
-    dexOptions {
-        jumboMode true
-        javaMaxHeapSize "4g"
+    debug {
+      buildConfigField "String", "ENVIRONMENT", "\"STAGING\""
+      testCoverageEnabled = true
     }
-
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-
-    defaultConfig {
-        applicationId "com.soi.rapidandroidapp"
-        minSdkVersion 14
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled true
-        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+    uat {
+      minifyEnabled true
+      buildConfigField "String", "ENVIRONMENT", "\"UAT\""
+      proguardFiles getDefaultProguardFile('proguard-project.txt'), 'proguard-rules.pro'
     }
+  }
 
-    buildTypes {
-        release {
-            ext.enableCrashlytics = false
-            minifyEnabled true
-            buildConfigField "String", "ENVIRONMENT", "\"LIVE\""
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            buildConfigField "String", "ENVIRONMENT", "\"STAGING\""
-            testCoverageEnabled = true
-        }
-        uat {
-            minifyEnabled true
-            buildConfigField "String", "ENVIRONMENT", "\"UAT\""
-            proguardFiles getDefaultProguardFile('proguard-project.txt'), 'proguard-rules.pro'
-        }
-    }
+  lintOptions {
+    disable 'InvalidPackage'
+  }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
+  sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/anim'] } }
 
-    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/anim'] } }
-
-    productFlavors {
-    }
+  productFlavors {}
 }
 
 dependencies {
-    repositories {
-        mavenCentral()
-    }
-    compile 'com.android.support:support-v4:22.1.1'
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.android.support:recyclerview-v7:22.1.1'
-    compile 'com.google.android.gms:play-services:6.5.+'
-    compile 'com.mobsandgeeks:android-saripaar:1.0.2'
-    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okio:okio:1.4.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
-    compile 'com.squareup:otto:1.3.8'
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
-    // Butterknife
-    compile('com.jakewharton:butterknife:6.1.0')
-    {
-        exclude module: 'support-v4'
-    }
-    // Crashlytics Kit
-    compile('com.crashlytics.sdk.android:crashlytics:2.3.2@aar')
-            {
-        transitive = true
-    }
-    // Twitter
-    compile('com.twitter.sdk.android:twitter:1.6.0@aar')
-    {
-        transitive = true;
-    }
-    // Twitter compose dialog
-    compile('com.twitter.sdk.android:tweet-composer:0.8.0@aar')
-    {
-        transitive = true;
-    }
-    // Facebook
-    compile('com.facebook.android:facebook-android-sdk:4.1.2') {
-        exclude module: 'bolts-android'
-    }
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'com.squareup:otto:1.3.8'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.9.5'
-    testCompile('com.squareup:fest-android:1.0.+') { exclude module: 'support-v4' }
-    testCompile('org.robolectric:robolectric:2.4') {
-        exclude module: 'classworlds'
-        exclude module: 'maven-artifact'
-        exclude module: 'maven-artifact-manager'
-        exclude module: 'maven-error-diagnostics'
-        exclude module: 'maven-model'
-        exclude module: 'maven-plugin-registry'
-        exclude module: 'maven-profile'
-        exclude module: 'maven-project'
-        exclude module: 'maven-settings'
-        exclude module: 'nekohtml'
-        exclude module: 'plexus-container-default'
-        exclude module: 'plexus-interpolation'
-        exclude module: 'plexus-utils'
-        exclude module: 'support-v4'
-        // crazy but my android studio don't like this dependency and to fix it remove .idea and re import project
-        exclude module: 'wagon-file'
-        exclude module: 'wagon-http-lightweight'
-        exclude module: 'wagon-http-shared'
-        exclude module: 'wagon-provider-api'
-    }
+  repositories {
+    mavenCentral()
+  }
+  compile 'com.android.support:support-v4:23.1.0'
+  compile 'com.android.support:appcompat-v7:23.1.0'
+  compile 'com.android.support:recyclerview-v7:23.1.0'
+  compile 'com.google.android.gms:play-services:8.1.0'
+  compile 'com.mobsandgeeks:android-saripaar:1.0.2'
+  compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+  compile 'com.squareup.picasso:picasso:2.5.2'
+  compile 'com.squareup.retrofit:retrofit:1.9.0'
+  compile 'com.squareup.okio:okio:1.4.0'
+  compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+  compile 'com.squareup.okhttp:okhttp:2.4.0'
+  compile 'com.squareup:otto:1.3.8'
+  compile 'com.squareup.dagger:dagger:1.2.2'
+  provided 'com.squareup.dagger:dagger-compiler:1.2.2'
+  // Butterknife
+  compile('com.jakewharton:butterknife:6.1.0') {
+    exclude module: 'support-v4'
+  }
+  // Crashlytics Kit
+  compile('com.crashlytics.sdk.android:crashlytics:2.3.2@aar') {
+    transitive = true
+  }
+  // Twitter
+  compile('com.twitter.sdk.android:twitter:1.6.0@aar') {
+    transitive = true;
+  }
+  // Twitter compose dialog
+  compile('com.twitter.sdk.android:tweet-composer:0.8.0@aar') {
+    transitive = true;
+  }
+  // Facebook
+  compile('com.facebook.android:facebook-android-sdk:4.1.2') {
+    exclude module: 'bolts-android'
+  }
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  testCompile 'com.squareup:otto:1.3.8'
+  testCompile 'junit:junit:4.12'
+  testCompile 'org.mockito:mockito-core:1.9.5'
+  testCompile('com.squareup:fest-android:1.0.+') { exclude module: 'support-v4' }
+  testCompile('org.robolectric:robolectric:3.0') {
+    exclude module: 'classworlds'
+    exclude module: 'maven-artifact'
+    exclude module: 'maven-artifact-manager'
+    exclude module: 'maven-error-diagnostics'
+    exclude module: 'maven-model'
+    exclude module: 'maven-plugin-registry'
+    exclude module: 'maven-profile'
+    exclude module: 'maven-project'
+    exclude module: 'maven-settings'
+    exclude module: 'nekohtml'
+    exclude module: 'plexus-container-default'
+    exclude module: 'plexus-interpolation'
+    exclude module: 'plexus-utils'
+    exclude module: 'support-v4'
+    // crazy but my android studio don't like this dependency and to fix it remove .idea and re import project
+    exclude module: 'wagon-file'
+    exclude module: 'wagon-http-lightweight'
+    exclude module: 'wagon-http-shared'
+    exclude module: 'wagon-provider-api'
+  }
 }
 
 jacoco {
-    toolVersion = "0.7.0.201403182114"
+  toolVersion = "0.7.0.201403182114"
 }
 gradle.projectsEvaluated {
-    def variants = android.applicationVariants.collect()
+  def variants = android.applicationVariants.collect()
 
-    tasks.withType(Test) { task ->
-        try {
-            variants.each { variant ->
-                def buildTypeName = variant.buildType.name.capitalize()
+  tasks.withType(Test) { task ->
+    try {
+      variants.each { variant ->
+        def buildTypeName = variant.buildType.name.capitalize()
 
-                def productFlavorNames = variant.productFlavors.collect { it.name.capitalize() }
-                if (productFlavorNames.isEmpty()) {
-                    productFlavorNames = [""]
-                }
-                def productFlavorName = productFlavorNames.join('')
+        def productFlavorNames = variant.productFlavors.collect { it.name.capitalize() }
+        if (productFlavorNames.isEmpty()) {
+          productFlavorNames = [""]
+        }
+        def productFlavorName = productFlavorNames.join('')
 
-                def variationName = "${productFlavorName}${buildTypeName}"
+        def variationName = "${productFlavorName}${buildTypeName}"
 
-                if (task.name.contains(variationName)) {
-                    def variationPath = variant.buildType.name;
+        if (task.name.contains(variationName)) {
+          def variationPath = variant.buildType.name;
 
-                    if (productFlavorName != null && !productFlavorName.isEmpty()) {
-                        variationPath = uncapitalize(productFlavorName) + "/" + variationPath
-                    }
+          if (productFlavorName != null && !productFlavorName.isEmpty()) {
+            variationPath = uncapitalize(productFlavorName) + "/" + variationPath
+          }
 
-                    def copyTestResourcesTask = project.tasks.create("copyTest${variationName}Resources", Copy)
-                    copyTestResourcesTask.from("${projectDir}/src/test/resources")
-                    copyTestResourcesTask.into("${buildDir}/intermediates/classes/test/${variationPath}")
+          def copyTestResourcesTask = project.tasks.create("copyTest${variationName}Resources",
+              Copy)
+          copyTestResourcesTask.from("${projectDir}/src/test/resources")
+          copyTestResourcesTask.into("${buildDir}/intermediates/classes/test/${variationPath}")
 
-                    // Makes the test task depend on the copy test resource variation task
-                    task.dependsOn(copyTestResourcesTask)
+          // Makes the test task depend on the copy test resource variation task
+          task.dependsOn(copyTestResourcesTask)
 
-                    variants.remove(variant)
+          variants.remove(variant)
 
-                    throw new Exception("Break") // Breaking the loop
-                }
-            }
-        } catch (Exception e) {} // Just drop the exception
-    }
+          throw new Exception("Break") // Breaking the loop
+        }
+      }
+    } catch (Exception e) {
+    } // Just drop the exception
+  }
 }
 
 def uncapitalize(String str) {
-    int strLen;
-    if (str == null || (strLen = str.length()) == 0) {
-        return str;
-    }
-    return new StringBuffer(strLen)
-            .append(Character.toLowerCase(str.charAt(0)))
-            .append(str.substring(1))
-            .toString();
+  int strLen;
+  if (str == null || (strLen = str.length()) == 0) {
+    return str;
+  }
+  return new StringBuffer(strLen)
+      .append(Character.toLowerCase(str.charAt(0)))
+      .append(str.substring(1))
+      .toString();
 }
 
-
 task jacocoTestReport(type: JacocoReport, dependsOn: ['test']) {
-    description = "Generates Jacoco coverage reports: XML and HTML"
-    group = "Reporting"
-// use hidden configuration, for details look into JacocoPlugin.groovy
-    jacocoClasspath = project.configurations['androidJacocoAnt']
-    reports {
-        xml {
-            enabled = true
-            destination = "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-        }
-        csv.enabled false
-        html {
-            enabled = true
-            destination = "${project.buildDir}/reports/jacoco"
-        }
+  description = "Generates Jacoco coverage reports: XML and HTML"
+  group = "Reporting"
+  // use hidden configuration, for details look into JacocoPlugin.groovy
+  jacocoClasspath = project.configurations['androidJacocoAnt']
+  reports {
+    xml {
+      enabled = true
+      destination = "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     }
-
-    // exclude auto-generated classes and tests
-    def fileFilter = ['**/R.class',
-                      '**/R$*.class',
-                      '**/BuildConfig.*',
-                      '**/Manifest*.*',
-                      '**/*Test*.*',
-                      'android/**/*.*',
-                      '**/*$InjectAdapter.class',
-                      '**/*$ModuleAdapter.class',
-                      '**/*$ViewInjector*.class']
-    def debugTree = fileTree(dir: "${project.buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
-
-    doFirst {
-        new File("$buildDir/intermediates/classes/").eachFileRecurse { file ->
-            if (file.name.contains('$$')) {
-                file.renameTo(file.path.replace('$$', '$'))
-            }
-        }
+    csv.enabled false
+    html {
+      enabled = true
+      destination = "${project.buildDir}/reports/jacoco"
     }
+  }
+
+  // exclude auto-generated classes and tests
+  def fileFilter = ['**/R.class',
+                    '**/R$*.class',
+                    '**/BuildConfig.*',
+                    '**/Manifest*.*',
+                    '**/*Test*.*',
+                    'android/**/*.*',
+                    '**/*$InjectAdapter.class',
+                    '**/*$ModuleAdapter.class',
+                    '**/*$ViewInjector*.class']
+  def debugTree = fileTree(dir: "${project.buildDir}/intermediates/classes/debug",
+      excludes: fileFilter)
+  def mainSrc = "${project.projectDir}/src/main/java"
+
+  sourceDirectories = files([mainSrc])
+  classDirectories = files([debugTree])
+  executionData = fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
+
+  doFirst {
+    new File("$buildDir/intermediates/classes/").eachFileRecurse { file ->
+      if (file.name.contains('$$')) {
+        file.renameTo(file.path.replace('$$', '$'))
+      }
+    }
+  }
 }
