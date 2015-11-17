@@ -1,6 +1,7 @@
 package com.soi.rapidandroidapp.test.support;
 
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.util.logging.LogManager;
 /**
  * Created by Spiros I. Oikonomakis on 5/18/15.
  */
-@RunWith(value = CustomRobolectricTestRunner.class)
+@RunWith(value = RobolectricDataBindingTestRunner.class)
 public abstract class UnitTestSpecification {
 
     public UnitTestSpecification() {

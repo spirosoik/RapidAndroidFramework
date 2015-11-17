@@ -19,7 +19,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 /**
  * Created by Spiros I. Oikonomakis on 11/4/14.
  */
-@Config(sdk = Build.VERSION_CODES.JELLY_BEAN)
+@Config(sdk = Build.VERSION_CODES.JELLY_BEAN, constants = BuildConfig.class)
 public class EnvironmentManagerTest
     extends UnitTestSpecification {
 
