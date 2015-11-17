@@ -10,7 +10,7 @@ test:
   override:
     - ./gradlew clean assemble -PdisablePreDex
     # start the emulator
-    - emulator -avd circleci-android22 -no-audio -no-window:
+    - emulator -avd circleci-android23 -no-audio -no-window:
         background: true
         parallel: true
     # wait for it to have booted

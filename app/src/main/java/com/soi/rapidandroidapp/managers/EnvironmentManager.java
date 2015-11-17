@@ -7,6 +7,7 @@ import com.soi.rapidandroidapp.BuildConfig;
 import com.soi.rapidandroidapp.models.common.Environment;
 import com.soi.rapidandroidapp.utilities.Constants;
 
+import hugo.weaving.DebugLog;
 import retrofit.RestAdapter;
 
 /**
@@ -26,6 +27,7 @@ public class EnvironmentManager {
      *
      * @return EnvironmentManager
      */
+    @DebugLog
     public static synchronized EnvironmentManager getInstance() {
         if (mInstance == null) {
             mInstance = new EnvironmentManager();
@@ -40,6 +42,7 @@ public class EnvironmentManager {
      *
      * @return Environment
      */
+    @DebugLog
     public Environment getEnvironment() {
         Environment environment = null;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
@@ -59,6 +62,7 @@ public class EnvironmentManager {
      *
      * @return String
      */
+    @DebugLog
     public String getEnviromentApiUrl() {
         String apiUrl = null;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
@@ -78,6 +82,7 @@ public class EnvironmentManager {
      *
      * @return RestAdapter.LogLevel
      */
+    @DebugLog
     public RestAdapter.LogLevel getEnvironmentApiLogLevel() {
         RestAdapter.LogLevel logLevel = null;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
@@ -97,6 +102,7 @@ public class EnvironmentManager {
      *
      * @return RestAdapter.LogLevel
      */
+    @DebugLog
     public int getEnvironmentLogLevel() {
         int logLevel = 0;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {
@@ -116,6 +122,7 @@ public class EnvironmentManager {
      *
      * @return
      */
+    @DebugLog
     public boolean canTrackGA() {
         boolean canTrack = false;
         if (BuildConfig.ENVIRONMENT.equals("STAGING")) {

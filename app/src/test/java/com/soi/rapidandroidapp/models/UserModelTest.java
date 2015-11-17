@@ -1,89 +1,85 @@
 package com.soi.rapidandroidapp.models;
 
-import android.test.InstrumentationTestCase;
-
+import android.os.Build;
 import com.soi.rapidandroidapp.models.common.DBModel;
 import com.soi.rapidandroidapp.test.support.UnitTestSpecification;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import org.junit.Before;
+import org.junit.Test;
+import org.robolectric.annotation.Config;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
  * Created by Spiros I. Oikonomakis on 11/14/14.
  */
-@Config(emulateSdk = 18)
-public class UserModelTest extends UnitTestSpecification {
+@Config(sdk = Build.VERSION_CODES.JELLY_BEAN)
+public class UserModelTest
+    extends UnitTestSpecification {
 
-    private User user;
+  private User user;
 
-    @Before
-    public void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
 
-        Random randomizer = new Random();
-        user = new User();
-        user.userId = randomizer.nextLong();
-        user.authToken = String.valueOf(new Date().getTime()) + "_token";
-        user.avatar = String.valueOf(new Date().getTime()) + ".jpg";
-        user.email = new Date().getTime() + "@test.com";
-        user.lname = String.valueOf(randomizer.nextLong());
-        user.fname = String.valueOf(randomizer.nextLong());
+    Random randomizer = new Random();
+    user = new User();
+    user.userId = randomizer.nextLong();
+    user.authToken = String.valueOf(new Date().getTime()) + "_token";
+    user.avatar = String.valueOf(new Date().getTime()) + ".jpg";
+    user.email = new Date().getTime() + "@test.com";
+    user.lname = String.valueOf(randomizer.nextLong());
+    user.fname = String.valueOf(randomizer.nextLong());
+  }
+
+  @Test
+  public void testSave() {
+    user.save();
+    assertThat(user.getId()).isNotNull();
+  }
+
+  @Test
+  public void testFindOne() throws IllegalAccessException, InstantiationException {
+    user.save();
+    assertThat(user.getId()).isNotNull();
+
+    User searchUser = (User) DBModel.getInstance(User.class).findOne(user.getId());
+    assertThat(user.getId()).isEqualTo(searchUser.getId());
+  }
+
+  @Test
+  public void testFindAll() throws IllegalAccessException, InstantiationException {
+    user.save();
+    assertThat(user.getId()).isNotNull();
+
+    List<User> users = (List<User>) DBModel.getInstance(User.class).findAll();
+    for (DBModel model : users) {
+      assertThat(model).isNotNull();
     }
+  }
 
-    @Test
-    public void testSave() {
-        user.save();
-        assertThat(user.getId()).isNotNull();
-    }
+  @Test
+  public void testDeleteOne() throws IllegalAccessException, InstantiationException {
+    user.save();
+    assertThat(user.getId()).isNotNull();
 
-    @Test
-    public void testFindOne() throws IllegalAccessException, InstantiationException {
-        user.save();
-        assertThat(user.getId()).isNotNull();
+    Long userId = user.getId();
+    DBModel.getInstance(User.class).deleteOne(user.getId());
 
-        User searchUser = (User) DBModel.getInstance(User.class).findOne(user.getId());
-        assertThat(user.getId()).isEqualTo(searchUser.getId());
-    }
+    User searchUser = (User) DBModel.getInstance(User.class).findOne(userId);
+    assertThat(searchUser).isNull();
+  }
 
-    @Test
-    public void testFindAll() throws IllegalAccessException, InstantiationException {
-        user.save();
-        assertThat(user.getId()).isNotNull();
+  @Test
+  public void testDeleteAll() throws IllegalAccessException, InstantiationException {
+    user.save();
+    assertThat(user.getId()).isNotNull();
 
-        List<User> users = (List<User>) DBModel.getInstance(User.class).findAll();
-        for (DBModel model : users) {
-            assertThat(model).isNotNull();
-        }
-    }
+    DBModel.getInstance(User.class).deleteAll();
 
-    @Test
-    public void testDeleteOne() throws IllegalAccessException, InstantiationException {
-        user.save();
-        assertThat(user.getId()).isNotNull();
-
-        Long userId = user.getId();
-        DBModel.getInstance(User.class).deleteOne(user.getId());
-
-        User searchUser = (User) DBModel.getInstance(User.class).findOne(userId);
-        assertThat(searchUser).isNull();
-    }
-
-    @Test
-    public void testDeleteAll() throws IllegalAccessException, InstantiationException {
-        user.save();
-        assertThat(user.getId()).isNotNull();
-
-        DBModel.getInstance(User.class).deleteAll();
-
-        List<User> userList = (List<User>) DBModel.getInstance(User.class).findAll();
-        assertThat(0).isEqualTo(userList.size());
-    }
+    List<User> userList = (List<User>) DBModel.getInstance(User.class).findAll();
+    assertThat(0).isEqualTo(userList.size());
+  }
 }
