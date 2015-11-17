@@ -20,7 +20,6 @@ import android.view.WindowManager;
 
 import com.soi.rapidandroidapp.R;
 
-import org.apache.http.HttpStatus;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -109,7 +108,7 @@ public class Utils {
             //Set request to header to reduce load as Subirkumarsao said.
             connection.setRequestMethod("HEAD");
             int code = connection.getResponseCode();
-            if (code == HttpStatus.SC_OK) {
+            if (code == HttpURLConnection.HTTP_OK) {
                 result = true;
             }
         } catch (MalformedURLException e) {

@@ -55,7 +55,6 @@ import com.soi.rapidandroidapp.utilities.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.apache.http.entity.StringEntity;
 
 import java.util.HashMap;
 
@@ -460,6 +459,10 @@ public abstract class AbstractFragmentActivity extends AppCompatActivity impleme
         }
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
+
+        @Override public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
     }
