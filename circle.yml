@@ -4,6 +4,7 @@ general:
       - master
 dependencies:
   pre:
+    - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
     - sudo chmod +x gradlew
     - sudo chmod +x scripts/run-circleci.sh
 test:
