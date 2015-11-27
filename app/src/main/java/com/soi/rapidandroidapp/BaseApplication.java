@@ -21,10 +21,13 @@ import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
 
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
+
 /**
  * Created by spirosoikonomakis on 3/9/14.
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
 
     @Inject
     EnvironmentManager environmentManager;
@@ -113,5 +116,15 @@ public class BaseApplication extends Application {
         APP_TRACKER, // Tracker used only in this app.
         GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
         ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
+    }
+
+    /**
+     * Support for pre-Lollipop multidex
+     *
+     * @param context
+     */
+    protected void attachBaseContext(Context context) {
+       super.attachBaseContext(context);
+       MultiDex.install(this);
     }
 }
