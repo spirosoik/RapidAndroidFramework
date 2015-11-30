@@ -36,7 +36,6 @@ to use for social actions.
 
 ## Testing
 * Robolectric for unit testing
-* JaCoCo coverage testing
 * Shell scripts to run tests fast. Check ```scripts``` folder.
 * CircleCI continuous integration server
 * Calabash (SOON)

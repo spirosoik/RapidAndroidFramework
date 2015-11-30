@@ -4,8 +4,6 @@ package com.soi.rapidandroidapp;
 import android.app.Instrumentation;
 import android.content.Context;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.app.Application;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -15,6 +13,7 @@ import com.soi.rapidandroidapp.modules.Injector;
 import com.soi.rapidandroidapp.modules.RootModule;
 import com.soi.rapidandroidapp.modules.SocialManager;
 
+import com.soi.rapidandroidapp.utilities.Constants;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -23,6 +22,7 @@ import io.fabric.sdk.android.Fabric;
 
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import ollie.Ollie;
 
 /**
  * Created by spirosoikonomakis on 3/9/14.
@@ -76,8 +76,10 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ActiveAndroid.initialize(getBaseContext());
-
+        Ollie.with(getApplicationContext())
+            .setName(Constants.DB_NAME)
+            .setVersion(Constants.DB_VERSION)
+        .init();
         instance = this;
 
         // Perform injection

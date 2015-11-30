@@ -5,6 +5,7 @@ import android.util.Log;
 import com.soi.rapidandroidapp.BuildConfig;
 import com.soi.rapidandroidapp.TestBaseApplication;
 import com.soi.rapidandroidapp.models.common.Environment;
+import com.soi.rapidandroidapp.test.support.ShadowMultiDex;
 import com.soi.rapidandroidapp.test.support.UnitTestSpecification;
 import com.soi.rapidandroidapp.utilities.Constants;
 import javax.inject.Inject;
@@ -19,7 +20,8 @@ import static org.fest.assertions.api.Assertions.assertThat;
 /**
  * Created by Spiros I. Oikonomakis on 11/4/14.
  */
-@Config(sdk = Build.VERSION_CODES.JELLY_BEAN, constants = BuildConfig.class)
+@Config(sdk = Build.VERSION_CODES.JELLY_BEAN, constants = BuildConfig.class, shadows = {
+    ShadowMultiDex.class})
 public class EnvironmentManagerTest
     extends UnitTestSpecification {
 

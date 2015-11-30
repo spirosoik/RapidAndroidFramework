@@ -10,6 +10,7 @@ import com.soi.rapidandroidapp.api.managers.net.response.foursquare.explore.comm
 import com.soi.rapidandroidapp.api.managers.net.response.foursquare.search.SearchResult;
 import com.soi.rapidandroidapp.api.managers.net.response.foursquare.search.common.SearchResponse;
 import com.soi.rapidandroidapp.events.common.BusProvider;
+import com.soi.rapidandroidapp.test.support.ShadowMultiDex;
 import com.soi.rapidandroidapp.test.support.UnitTestSpecification;
 import com.soi.rapidandroidapp.utilities.Constants;
 import com.squareup.otto.Subscribe;
@@ -21,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.annotation.Config;
+import org.robolectric.internal.Shadow;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -29,7 +31,8 @@ import static org.fest.assertions.api.Assertions.assertThat;
  * <p/>
  * This class handles all the api requests
  */
-@Config(sdk = Build.VERSION_CODES.JELLY_BEAN, constants = BuildConfig.class)
+@Config(sdk = Build.VERSION_CODES.JELLY_BEAN, constants = BuildConfig.class, shadows = {
+    ShadowMultiDex.class})
 public class FoursquareApiManagerTest
     extends UnitTestSpecification {
 

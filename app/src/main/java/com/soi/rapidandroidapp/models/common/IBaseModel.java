@@ -1,20 +1,9 @@
 package com.soi.rapidandroidapp.models.common;
 
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
-
 import java.util.Date;
 import java.util.List;
 
 public interface IBaseModel<T> {
-
-
-    public Date getCreatedAt();
-
-    /**
-     * @return the updated date of this record
-     */
-    public Date getUpdated();
 
     /**
      * @param mId The primary key of the table
@@ -38,17 +27,4 @@ public interface IBaseModel<T> {
      */
     public void deleteAll();
 
-    /**
-     * Returns an instance of an Select ActiveRecord object
-     *
-     * @return Select
-     */
-    public Select selectQuery();
-
-    /**
-     * Returns an instance of an Delete ActiveRecord object
-     *
-     * @return Select
-     */
-    public Delete deleteQuery();
 }

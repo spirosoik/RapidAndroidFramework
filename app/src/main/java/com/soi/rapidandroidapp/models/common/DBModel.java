@@ -1,15 +1,15 @@
 package com.soi.rapidandroidapp.models.common;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ollie.Model;
+import ollie.annotation.Column;
+import ollie.query.Delete;
+import ollie.query.Select;
 
 /**
  * This is Abstract Model for the app's database.
@@ -22,12 +22,6 @@ public class DBModel<T> extends Model implements IBaseModel<DBModel>, Comparable
     private static final DBModel instance = new DBModel();
 
     private Map<Class, Object> singletonHolder = new HashMap<Class, Object>();
-
-    @Column(name = "created_at")
-    private Date createdAt = new Date();
-
-    @Column(name = "updated_at")
-    private Date updated_at = new Date();
 
     /**
      * Singletton pattern for each model which extends this DBModel class
@@ -49,33 +43,23 @@ public class DBModel<T> extends Model implements IBaseModel<DBModel>, Comparable
     }
 
     @Override
-    public Date getCreatedAt() {
-        return new Date();
-    }
-
-    @Override
-    public Date getUpdated() {
-        return this.updated_at;
-    }
-
-    @Override
     public DBModel findOne(Long mId) {
-        return load(getClass(), mId);
+        return find(getClass(), mId);
     }
 
     @Override
     public List<? extends DBModel> findAll() {
-        return selectQuery().from(getClass()).execute();
+        return Select.from(getClass()).fetch();
     }
 
     @Override
     public void deleteOne(Long mId) {
-        deleteQuery().from(getClass()).where("Id = ?", mId).execute();
+        Delete.from(getClass()).where("_id = ?", mId).execute();
     }
 
     @Override
     public void deleteAll() {
-        deleteQuery().from(getClass()).execute();
+        Delete.from(getClass()).execute();
     }
 
     @Override
@@ -86,19 +70,5 @@ public class DBModel<T> extends Model implements IBaseModel<DBModel>, Comparable
     @Override
     public String toString() {
         return super.toString();
-    }
-
-    @Override
-    public Select selectQuery() {
-        return new Select();
-    }
-
-    @Override
-    public Delete deleteQuery() {
-        return new Delete();
-    }
-
-    public T clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
     }
 }

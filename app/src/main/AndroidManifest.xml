@@ -1,54 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.soi.rapidandroidapp"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.soi.rapidandroidapp"
+    >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
-    <application
-        android:name=".BaseApplication"
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+  <application
+      android:name=".BaseApplication"
+      android:allowBackup="true"
+      android:icon="@drawable/ic_launcher"
+      android:label="@string/app_name"
+      android:theme="@style/AppTheme"
+      >
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version"
+        />
+    <meta-data
+        android:name="AA_DB_NAME"
+        android:value="RapidAndroidApp.db"
+        />
+    <meta-data
+        android:name="AA_DB_VERSION"
+        android:value="1"
+        />
+    <meta-data
+        android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/fb_application_id"
+        />
+    <meta-data
+        android:name="io.fabric.ApiKey"
+        android:value="1f22812da16ce068a0369d078ed2829f224738e2"
+        />
+
+    <activity
+        android:name=".ui.MainActivity"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
-        <meta-data
-            android:name="AA_DB_NAME"
-            android:value="RapidAndroidApp.db"/>
-        <meta-data
-            android:name="AA_DB_VERSION"
-            android:value="1"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-                   android:value="@string/fb_application_id"/>
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="1f22812da16ce068a0369d078ed2829f224738e2" />
-        <activity
-            android:name=".ui.MainActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+    <activity
+        android:name="com.facebook.FacebookActivity"
+        android:configChanges=
+            "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:label="@string/app_name"
+        />
+    <activity android:name=".ui.fragments.ItemActivity"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
-        <activity android:name="com.facebook.FacebookActivity"
-                  android:configChanges=
-                      "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
-                  android:label="@string/app_name" />
-        <activity android:name=".ui.fragments.ItemActivity"/>
-
-        <provider android:authorities="com.facebook.app.FacebookContentProvider1234"
-                  android:name="com.facebook.FacebookContentProvider"
-                  android:exported="true" />
-</application>
+    <provider
+        android:authorities="com.facebook.app.FacebookContentProvider1234"
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true"
+        />
+  </application>
 
 </manifest>
