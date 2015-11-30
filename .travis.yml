@@ -10,6 +10,4 @@ android:
     - extra-android-m2repository
 
 script:
-  ./gradlew :app:testDebug \
-            :app:connectedAndroidTest \
-            -PtravisCi -PdisablePreDex
+  ./gradlew :app:testDebug :app:connectedAndroidTest -PtravisCi -PdisablePreDex
