@@ -13,7 +13,7 @@ Android Studio 1.x and Gradle 2.x
 * [Android ButterKnife Zelezny] (http://plugins.jetbrains.com/plugin/7369)
 
 ## Libraries
-* [Active Android 3.1.10](https://github.com/pardom/ActiveAndroid)
+* [Ollie 0.3.2-SNAPSHOT](https://github.com/pardom/Ollie)
 * [Retrofit 1.9.0](http://square.github.io/retrofit/)
 * [OkHttp 2.4.0](http://square.github.io/okhttp/)
 * [Otto Eventbus 1.3.8](http://square.github.io/otto/)
