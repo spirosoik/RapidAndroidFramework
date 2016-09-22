@@ -1,4 +1,4 @@
-Rapid Android Development Template
+Rapid Android Development Template [NOT SUPPORTED]
 ==================================
 
 **master:** [![Build Status](https://travis-ci.org/spirosoik/RapidAndroidFramework.svg?branch=master)](https://travis-ci.org/spirosoik/RapidAndroidFramework)
